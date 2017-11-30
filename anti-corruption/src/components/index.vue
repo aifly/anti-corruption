@@ -1,5 +1,7 @@
 <template>
 	<div class="zmiti-index-main-ui lt-full" @touchmove='touchmove($event)' @touchstart='touchstart($event)' @touchend='touchend($event)' >
+		<canvas width="78" height="75" ref='canvas' class="zmiti-person-canvas"></canvas>
+		<img ref='person-img' src='../assets/images/person.png' style="opacity:0;position:absolute;left: -599px;width: auto"/>
 		<div ref='aa' class="zmiti-index-bottom-img-C" :style="{transform:'translate(0,'+transX+'px)'}">
 			<img src="../assets/images/bg.png">
 			<img src="../assets/images/bg.png">
@@ -21,13 +23,55 @@
 				var height = this.$refs.aa.offsetHeight;
 				var x =-1;
 				this.speed = x;
-				setInterval(()=>{
-					this.transX+=this.speed;
-					if(this.transX<=-height/2){
-						this.transX = 0;
+
+
+				var canvas = this.$refs['canvas'];
+				var context = canvas.getContext('2d');
+
+				var img = this.$refs['person-img'];
+				console.log(canvas.width,canvas.height)
+
+				var imgH = img.height/3,
+					imgW = img.width,
+					canvasW = canvas.width,
+					canvasH = canvas.height,
+					personIndex = 0;
+
+					var render = ()=>{
+						this.transX+=this.speed;
+						if(this.transX<=-height/2){
+							this.transX = 0;
+						}
+						
+						personIndex+=.25;
+
+						if(personIndex%1 === 0){
+							context.clearRect(0,0,canvasW,canvasH)
+							context.drawImage(img,0,(personIndex%3)*imgH,imgW,imgH,0,0,canvasW,canvasH)
+						}
+
+						webkitRequestAnimationFrame(render)
 					}
-				},20)
-			},100)
+
+					render();
+
+ 
+
+				
+				
+				
+				
+
+
+
+
+
+			
+			},100);
+
+
+			
+
 		},
 		methods:{
 			touchstart(e){

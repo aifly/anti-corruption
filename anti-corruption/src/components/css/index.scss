@@ -61,4 +61,11 @@ input, textarea {
 
 	}
 
+	.zmiti-person-canvas {
+		@include pos(a);
+		left: 1.4rem;
+		top: 0;
+		z-index: 10;
+	}
+
 }
