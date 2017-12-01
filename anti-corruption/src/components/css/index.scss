@@ -59,13 +59,63 @@ input, textarea {
 			display: block;
 		}
 
+		@include animation(bgMove 10s linear infinite);
+	}
+
+	&.active {
+		.zmiti-index-jump {
+			//@include animation(jump 1s ease 2 alternate);
+		}
+
+		.zmiti-person-canvas {
+			opacity: 0
+		}
+
+	}
+
+	.zmiti-index-energy {
+		@include pos(a);
+		z-index: 12;
+		//@include animation(energyMove 4s linear infinite);
 	}
 
 	.zmiti-person-canvas {
 		@include pos(a);
 		left: 1.4rem;
-		top: 0;
+		top: 100px;
+		z-index: 11;
+	}
+
+	.zmiti-index-jump {
+		width: 80px;
+		@include pos(a);
+		left: 1.4rem;
+		top: 100px;
+		opacity: 0;
 		z-index: 10;
+
+		&.animate {
+		}
+
+	}
+
+}
+
+@-webkit-keyframes energyMove {
+	to {
+		///	@include transform(translate(0, -100vh));
+	}
+
+}
+
+@-webkit-keyframes jump {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 1;
+		-webkit-transform: translate3d(2rem, 0, 0);
 	}
 
 }
