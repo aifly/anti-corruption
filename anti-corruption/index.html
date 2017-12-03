@@ -12,8 +12,59 @@
   </head>
   <body>
     <div id="app"></div>
-
+    <div id="zmiti-stage">
+      
+    </div>
     <script src='https://www.phaser-china.com/examples/libs/phaser.min.js'></script>
     <!-- built files will be auto injected -->
+    <script>
+       window.onload = function(){
+          var viewW = document.documentElement.clientWidth,
+              viewH = document.documentElement.clientHeight;
+
+          var game = new Phaser.Game(viewW,viewH,Phaser.CANVAS,'zmiti-stage',state);
+
+          function state(){
+              this.init = function(){
+                //game.stage.setBackgroundColor(0xff0000);
+              }
+              this.preload = function(){
+                game.load.image('bg','./src/assets/images/bg1.jpg');
+                game.load.spritesheet('person','./src/assets/images/person.png',177,112);
+                
+                game.load.onFileComplete.add(function(){
+                  //console.log(game.load.progress);
+                });
+
+              }
+              this.create  = function(){
+                //game.world.setBounds(0,0,viewW,2004*viewW/750);
+                var bg = game.add.tileSprite(0,0,game.width,game.height,'bg');
+                bg.autoScroll(0,-100);
+                ///game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+                //bg.scale.set(.5,.5)
+                ///console.log(bg,game.height);
+
+                var sprite = game.add.sprite(62,100,'person');
+                sprite.scale.set(.5,.5)
+                sprite.animations.add('run',[0,1,2]);
+                sprite.animations.play('run',10,true);
+                setTimeout(()=>{
+                  sprite.animations.stop('run');
+                  sprite.animations.play('run',5,true);
+                },1000)
+                ///game.camera.follow(sprite);
+
+              } 
+              this.update = function(){
+                  game.camera.y  = game.camera.y +1;
+              }           
+          }
+          game.state.add( 'state',state);
+
+          game.state.start('state');
+
+       }
+    </script>
   </body>
 </html>

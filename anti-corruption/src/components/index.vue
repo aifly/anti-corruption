@@ -38,7 +38,7 @@
 		},
 		created(){
 
-
+			return;
 
 			function preload() {
 			    game.load.tilemap('mario', './dist/static/json/data.json', null, Phaser.Tilemap.TILED_JSON);
