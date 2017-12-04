@@ -8,7 +8,9 @@
     	document.getElementsByTagName('html')[0].style.fontSize = document.documentElement.clientWidth / 10+'px';
     </script>
     <title>反腐</title>
-    <style></style>
+    <style>
+      *{margin:0;padding:0;}
+    </style>
   </head>
   <body>
     <div id="app"></div>
@@ -29,35 +31,184 @@
                 //game.stage.setBackgroundColor(0xff0000);
               }
               this.preload = function(){
-                game.load.image('bg','./src/assets/images/bg1.jpg');
+                game.load.image('jump','./src/assets/images/jump.png');
+                game.load.image('bg','./src/assets/images/bg.jpg');
                 game.load.spritesheet('person','./src/assets/images/person.png',177,112);
+
+                game.load.image('energy','./src/assets/images/energy.png');
+
+                game.load.spritesheet('tigger','./src/assets/images/tigger.png',135,200)
                 
                 game.load.onFileComplete.add(function(){
                   //console.log(game.load.progress);
                 });
 
               }
+
+              var sprite,
+                  animation,
+                  bg,
+                  energy,
+                  jumper,
+                  tiggerSprite,
+                  tiggerAnimation;
               this.create  = function(){
                 //game.world.setBounds(0,0,viewW,2004*viewW/750);
-                var bg = game.add.tileSprite(0,0,game.width,game.height,'bg');
-                bg.autoScroll(0,-100);
+                bg = game.add.tileSprite(0,0,game.width*2,game.height*2,'bg');
+               // bg.autoScroll(0,-140);
+                
                 ///game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-                //bg.scale.set(.5,.5)
+                bg.scale.set(.6,.6)
                 ///console.log(bg,game.height);
 
-                var sprite = game.add.sprite(62,100,'person');
+                //行走的人物
+                sprite = game.add.sprite(62,100,'person');
                 sprite.scale.set(.5,.5)
-                sprite.animations.add('run',[0,1,2]);
-                sprite.animations.play('run',10,true);
-                setTimeout(()=>{
-                  sprite.animations.stop('run');
-                  sprite.animations.play('run',5,true);
-                },1000)
-                ///game.camera.follow(sprite);
+                animation = sprite.animations.add('run',[0,1,2]);
+                sprite.animations.play('run',5,true);
 
+
+                //行走的老虎
+                tiggerSprite = game.add.sprite(62,400,'tigger');
+                tiggerAnimation =tiggerSprite.animations.add('tiggerrun',[0,1,2]);
+                tiggerSprite.scale.set(.4,.4)
+                tiggerSprite.animations.play('tiggerrun',5,true);
+
+
+                jumper = game.add.sprite(62,100,'jump')
+                jumper.scale.set(.5,.5);
+                jumper.exists = false;
+
+ 
+                energy = game.add.sprite(viewW/2,game.height,'energy');
+
+              
+
+               /* var tween = game.add.tween(jumper);
+                tween.to({x:120},700,Phaser.Easing.Power1,false,0,0,true);*/
+
+                var isMove = false;
+                game.input.onTap.add(function(){
+                  if(isMove) return;
+                  sprite.exists = false;
+                  jumper.exists = true;
+
+                  /*tween.start();
+                  tween.onComplete.add(function(){
+                    sprite.exists = true;
+                    jumper.exists = false;                    
+                  })*/
+
+                  bg.autoScroll(0,-200);
+
+                  jumper.body.velocity = new Phaser.Point(80,0);
+
+                  jumper.body.acceleration = new Phaser.Point(-80,0)
+                  
+                });
+
+         
+
+                var touch = new Phaser.Touch(game);
+
+                touch.onTouchStart = function(e){
+                  e.preventDefault()
+                  this.startY = e.changedTouches[0].pageY;
+                  this.startTime = new Date().getTime();
+                };
+
+                touch.onTouchMove = function(e){
+                  e.preventDefault()
+                  isMove = true;//禁用点击事件tap
+                };
+
+
+
+                //开启物理引擎
+                game.physics.startSystem(Phaser.Physics.ARCADE);
+
+
+                game.physics.enable(energy,Phaser.Physics.ARCADE);
+                game.physics.enable(sprite,Phaser.Physics.ARCADE);
+
+
+                game.physics.enable(jumper,Phaser.Physics.ARCADE);
+                game.physics.enable(tiggerSprite,Phaser.Physics.ARCADE);
+
+
+                energy.body.velocity = new Phaser.Point(0,-30)
+
+                energy.body.acceleration = new Phaser.Point(0,-10)
+
+
+                tiggerSprite.body.velocity = new Phaser.Point(0,-30)
+
+                tiggerSprite.body.acceleration = new Phaser.Point(0,-10)
+
+
+
+                this.speed = 0;
+                var s = this;
+                touch.onTouchEnd= function(e){
+                  isMove = false;
+                  this.endY = e.changedTouches[0].pageY;
+                  var disY = Math.abs(this.startY-this.endY);
+                  this.endTime = new Date().getTime();
+                  if(disY>50){
+                    var disTime = this.endTime - this.startTime;
+                    s.speed +=20;
+                    if(s.speed>=102){
+                      s.speed = 101;
+                    }
+
+
+                  }
+
+                };
+                touch.start();
+               
               } 
               this.update = function(){
-                  game.camera.y  = game.camera.y +1;
+                
+                this.speed -= 1;
+
+                if(this.speed<=0){
+                  this.speed = 0;
+                  ///animation = sprite.animations.add('run',[1]);
+                }else{
+                  //animation = sprite.animations.add('run',[0,1,2]);
+                }
+
+                bg.autoScroll(0,!this.speed?0:(this.speed*3 + 200)*-1);
+
+                if(jumper.x<62){
+                  jumper.x = 62;
+                  jumper.body.velocity = new Phaser.Point(0,0)
+                  sprite.exists = true;
+                  jumper.exists = false;  
+                }
+        
+                console.log(this.speed)
+                animation.speed = this.speed / 5<5?5:this.speed / 5;
+                animation.speed =  animation.speed > 25 ? 25 : animation.speed;
+                ///document.title = this.speed;
+               
+
+
+
+                game.physics.arcade.overlap(jumper,energy,function(){
+                  energy.exists = false;
+                })
+
+
+                game.physics.arcade.overlap(sprite,tiggerSprite,function(){
+                  console.log(tiggerSprite.x,tiggerSprite.y)
+                  tiggerSprite.exists = false;
+
+                })
+
+
+               
               }           
           }
           game.state.add( 'state',state);

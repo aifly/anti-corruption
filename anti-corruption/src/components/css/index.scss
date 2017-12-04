@@ -41,6 +41,7 @@ input, textarea {
 
 .zmiti-index-main-ui {
 	overflow: hidden;
+	display: none;
 
 	&:after {
 		content: '';

@@ -50,7 +50,8 @@ input, textarea {
   outline: none; }
 
 .zmiti-index-main-ui {
-  overflow: hidden; }
+  overflow: hidden;
+  display: none; }
   .zmiti-index-main-ui:after {
     content: '';
     left: 0;

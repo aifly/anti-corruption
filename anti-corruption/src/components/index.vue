@@ -1,5 +1,5 @@
 <template>
-	<div  :class="{active:isJumping}" class="zmiti-index-main-ui lt-full" id="zmiti-index-scene">
+	<div  :class="{active:isJumping}" class="zmiti-index-main-ui lt-full"  id="zmiti-index-scene">
 		<!-- <canvas width="78" height="50" ref='canvas' class="zmiti-person-canvas"></canvas>
 		<img :style="{WebkitTransform:'translate('+jumperTransX+'px,0)',opacity:jumperTransX>0?1:0}" class="zmiti-index-jump" ref='jumper' src="../assets/images/jump.png" width="78">
 		<img ref='person-img' src='../assets/images/person.png' style="opacity:0;position:absolute;left: -599px;width: auto"/>
