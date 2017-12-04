@@ -39,6 +39,9 @@
 
                 game.load.spritesheet('tigger','./src/assets/images/tigger.png',135,200)
                 
+                game.load.spritesheet('fly','./src/assets/images/fly.png',81,82)
+
+                
                 game.load.onFileComplete.add(function(){
                   //console.log(game.load.progress);
                 });
@@ -52,7 +55,9 @@
                   energy,
                   jumper,
                   tiggerSprite,
-                  tiggerAnimation;
+                  tiggerAnimation,
+                  flySprite,
+                  flyAnimaiton;
               this.create  = function(){
                 //game.world.setBounds(0,0,viewW,2004*viewW/750);
                 bg = game.add.tileSprite(0,0,game.width*2,game.height*2,'bg');
@@ -74,6 +79,12 @@
                 tiggerAnimation =tiggerSprite.animations.add('tiggerrun',[0,1,2]);
                 tiggerSprite.scale.set(.4,.4)
                 tiggerSprite.animations.play('tiggerrun',5,true);
+
+                //飞行的苍蝇
+                flySprite = game.add.sprite(140,400,'fly');
+                flyAnimaiton = flySprite.animations.add('flyfly',[0,1,2,3,4,5,6,7,8]);
+                flySprite.scale.set(.5,.5);
+                flySprite.animations.play('flyfly',15,true);
 
 
                 jumper = game.add.sprite(62,100,'jump')
