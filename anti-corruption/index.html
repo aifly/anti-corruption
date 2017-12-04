@@ -44,6 +44,7 @@
                 });
 
               }
+              var s = this;
 
               var sprite,
                   animation,
@@ -88,8 +89,10 @@
                 tween.to({x:120},700,Phaser.Easing.Power1,false,0,0,true);*/
 
                 var isMove = false;
+
                 game.input.onTap.add(function(){
-                  if(isMove) return;
+                  if(isMove || jumper.isDown) return;
+                  jumper.isDown = true;
                   sprite.exists = false;
                   jumper.exists = true;
 
@@ -99,8 +102,8 @@
                     jumper.exists = false;                    
                   })*/
 
-                  bg.autoScroll(0,-200);
-
+                    
+                  s.speed = 100;
                   jumper.body.velocity = new Phaser.Point(80,0);
 
                   jumper.body.acceleration = new Phaser.Point(-80,0)
@@ -148,7 +151,7 @@
 
 
                 this.speed = 0;
-                var s = this;
+                
                 touch.onTouchEnd= function(e){
                   isMove = false;
                   this.endY = e.changedTouches[0].pageY;
@@ -185,7 +188,8 @@
                   jumper.x = 62;
                   jumper.body.velocity = new Phaser.Point(0,0)
                   sprite.exists = true;
-                  jumper.exists = false;  
+                  jumper.exists = false;
+                  jumper.isDown = false;  
                 }
         
                 console.log(this.speed)
