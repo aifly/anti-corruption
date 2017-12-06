@@ -634,11 +634,53 @@
      create: function() {
        var game = this.game;
        var bg = game.add.image(0, -viewH / 2, 'bg');
-
        bg.scale.set(.5, .5)
 
+       var title = game.add.image(game.width-30,game.world.centerY,'title');
+       title.scale.set(.3,.3)
+       title.anchor.setTo(1,.5);
+       var s = this;
+       var beginBtn = game.add.button(game.world.centerX/3,game.world.centerY,'begin-btn',function(){
+            s.game.state.start('gameState')
+       });
+       beginBtn.scale.set(.5,.5);
+       beginBtn.anchor.setTo(.5,.5);
+
+       var startX = 56;
+        var sprite = game.add.sprite(startX, -100, 'person');
+        this.sprite = sprite;
+         sprite.scale.set(.3, .3)
+           //sprite.exists = false;
+         animation = sprite.animations.add('run', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+         sprite.animations.play('run', 25, true);
+
+         var jumper = game.add.sprite(startX, 100, 'jump')
+
+         this.jumper = jumper;
+         jumper.scale.set(.3, .3);
+         jumper.exists = false;
+
      },
-     preload: function() {
+     update: function() {
+
+        if(this.sprite){
+            if( this.sprite.y>100){
+                this.sprite.y= 100;
+                this.jumper.exists = true;
+                this.sprite.kill();
+                this.sprite.exists = false;
+                this.sprite =null;
+                var tween =  this.game.add.tween(this.jumper);
+                tween.to({
+                    x:this.game.width-80,
+                    y:this.jumper.y+50
+                },1000,Phaser.Easing.Linear.None);
+                tween.start();
+            }else{
+                this.sprite.y++;
+            }
+        }
+
 
      }
 
