@@ -619,6 +619,11 @@
        game.load.image('person-top', './src/assets/images/person-top.png');
        game.load.spritesheet('over-sprite', './src/assets/images/over.png', 116, 376);
        game.load.image('result1', './src/assets/images/result1.png');
+       game.load.image('result2', './src/assets/images/result2.png');
+       game.load.image('result3', './src/assets/images/result3.png');
+       game.load.image('restart-btn', './src/assets/images/restart-btn.png');
+       game.load.image('share-btn', './src/assets/images/share-btn.png');
+       game.load.image('saveimg-btn', './src/assets/images/saveimg-btn.png');
 
        game.load.audio('gamestart', './src/assets/music/gamestart.mp3');
        game.load.audio('gaming', './src/assets/music/gaming.mp3');
@@ -764,6 +769,9 @@
      this.game.state.add('gameBeforeStartState', this.gameBeforeStartState)
      this.game.state.start('loadingState');
 
+     this.flyCount = 0; //打死的老虎的数量
+     this.tiggerCount = 0; //打死的苍蝇的数量
+
 
      function gameState() {
        this.init = function() {}
@@ -785,8 +793,8 @@
          energySpeed = -80,
          dieTigger,
          dieFly,
-         currentBlood = 0,
-         allBlood = 20,
+         currentBlood = 21,
+         allBlood = 21,
          fastAudio,
          addEnergy,
          tiggerDieAudio,
@@ -794,7 +802,11 @@
          waitAudio,
          energyText;
 
+       self.currentBlood = currentBlood;
+
        this.create = function() {
+
+
 
          var s = this;
          gamingAuido = new Phaser.Sound(game, 'gaming', .2)
@@ -833,7 +845,7 @@
          blood.scale.set(.7, .7);
 
 
-         var counts = 120;
+         var counts = 60;
 
          var text = game.add.text(game.width - 30, game.height / 2.2, counts + 's', {
            fill: '#fff',
@@ -844,15 +856,21 @@
 
 
 
-         game.time.events.loop(Phaser.Timer.SECOND, function() {
+         var event = game.time.events.loop(Phaser.Timer.SECOND, function() {
            counts--;
-
-           if (counts <= 0) {
+           self.counts = 60 - counts;
+           if (counts < 0) {
              //game over
+             event.timer.stop(); //时间到。游戏结束
+             self.gameover();
+
            } else {
              text.setText('' + counts + ' s');
            }
          }, this);
+
+         self.timerEvent = event;
+
 
 
          /*  personStand = game.add.sprite(startX, 100, 'person')
@@ -977,7 +995,7 @@
              }
              this.timer && clearTimeout(this.timer);
              this.timer = setTimeout(function() {
-               waitAudio.play();
+               !self.gameisover && waitAudio.play();
              }, 5000)
            }
 
@@ -1066,27 +1084,27 @@
 
          game.physics.arcade.overlap(jumper, energy, function() {
 
-           currentBlood += 2;
-           if (currentBlood > allBlood) {
-             currentBlood = allBlood;
+           self.currentBlood += 2;
+           if (self.currentBlood > allBlood) {
+             self.currentBlood = allBlood;
            }
            addEnergy.play();
-           self.computeBlood(currentBlood, allBlood)
+           self.computeBlood(self.currentBlood, allBlood)
              //energy.exists = false;
            energy.y = defaultY;
          })
 
          game.physics.arcade.overlap(jumper, energy1, function() {
            //energy.exists = false;
-           currentBlood += 4;
+           self.currentBlood += 4;
 
            addEnergy.play();
 
 
-           if (currentBlood > allBlood) {
-             currentBlood = allBlood;
+           if (self.currentBlood > allBlood) {
+             self.currentBlood = allBlood;
            }
-           self.computeBlood(currentBlood, allBlood)
+           self.computeBlood(self.currentBlood, allBlood)
 
            energy1.y = defaultY;
          })
@@ -1103,74 +1121,82 @@
          }
 
          game.physics.arcade.overlap(sprite, tiggerSprite, function() {
-           //console.log(tiggerSprite.x, tiggerSprite.y)
+             //console.log(tiggerSprite.x, tiggerSprite.y)
 
-           currentBlood -= 4;
-           self.computeBlood(Math.max(currentBlood, 0), allBlood)
+             self.currentBlood -= 4;
+             self.computeBlood(Math.max(self.currentBlood, 0), allBlood)
 
 
-           if (currentBlood < 0) {
-             currentBlood = 0;
+             if (self.currentBlood < 0) {
+               self.currentBlood = 0;
 
-             var overSprite = game.add.sprite(startX, 70, 'over-sprite');
-             self.overSprite = overSprite;
-             var ani = overSprite.animations.add('run', [0, 1, 2, 3]);
+               var overSprite = game.add.sprite(startX, 70, 'over-sprite');
+               self.overSprite = overSprite;
+               var ani = overSprite.animations.add('run', [0, 1, 2, 3]);
 
-             overSprite.scale.set(.4, .4);
-             overSprite.exists = false;
+               overSprite.scale.set(.4, .4);
+               overSprite.exists = false;
 
-             sprite.exists = false;
+               sprite.exists = false;
 
-             var personDie = game.add.image(startX, 100, 'person-die');
-             self.personDie = personDie;
-             personDie.scale.set(.4, .4)
+               var personDie = game.add.image(startX, 100, 'person-die');
+               self.personDie = personDie;
+               personDie.scale.set(.4, .4);
+               jumper.exists = false;
+               jumper.kill();
+
+
+               setTimeout(function() {
+                 overSprite.exists = true;
+                 self.gameover(overSprite);
+                 tiggerSprite.kill();
+                 flySprite.kill();
+                 personDie.kill();
+               }, 1000)
+               game.world.setChildIndex(tiggerSprite, 10);
+             } else {
+               self.tiggerCount++;
+               dieTigger = game.add.image(tiggerSprite.x, tiggerSprite.y, 'tigger-die');
+               dieTigger.scale.set(.3, .3);
+               //console.log(game.world.children)
+               game.world.setChildIndex(dieTigger, 1);
+               tiggerDieAudio.play()
+               tiggerSprite.y = defaultY;
+               self.fillDialog();
+             }
+
+
+
+             //tiggerSprite.exists = false; //
+
+
+           })
+           //和苍蝇碰撞上了。
+         game.physics.arcade.overlap(jumper, flySprite, function() {
+           self.currentBlood -= 2;
+           self.computeBlood(self.currentBlood, allBlood)
+
+
+           if (self.currentBlood < 0) {
+             self.currentBlood = 0;
+
+           } else {
+             self.fillDialog();
+             self.flyCount++;
+             dieFly = game.add.image(flySprite.x, flySprite.y, 'fly-die');
+             dieFly.scale.set(.5, .5);
+             game.world.setChildIndex(dieFly, 1);
 
              setTimeout(function() {
-               overSprite.exists = true;
-               self.gameover(overSprite);
-               tiggerSprite.kill();
-               flySprite.kill();
-               personDie.kill();
-             }, 1000)
-             game.world.setChildIndex(tiggerSprite, 10);
-           } else {
 
-             dieTigger = game.add.image(tiggerSprite.x, tiggerSprite.y, 'tigger-die');
-             dieTigger.scale.set(.3, .3);
-             //console.log(game.world.children)
-             game.world.setChildIndex(dieTigger, 1);
-             tiggerDieAudio.play()
-             tiggerSprite.y = defaultY;
+               dieFly.kill()
+               dieFly = null;
+             }, 3000)
+
+             flySprite.y = defaultY;
            }
 
 
-           self.fillDialog();
-
-
-           //tiggerSprite.exists = false; //
-
-
-         })
-
-         game.physics.arcade.overlap(jumper, flySprite, function() {
-           dieFly = game.add.image(flySprite.x, flySprite.y, 'fly-die');
-           dieFly.scale.set(.5, .5);
-           game.world.setChildIndex(dieFly, 1);
-           currentBlood -= 2;
-           self.fillDialog();
-           if (currentBlood < 0) {
-             currentBlood = 0;
-
-           }
-           self.computeBlood(currentBlood, allBlood)
-
-           setTimeout(function() {
-
-             dieFly.kill()
-             dieFly = null;
-           }, 3000)
-
-           flySprite.y = defaultY;
          })
 
        }
@@ -1189,14 +1215,108 @@
          this.iframeC.find('iframe').attr('src', 'about:blank');
          this.game.paused = false;
        }.bind(this), 10);
-     }.bind(this))
+     }.bind(this));
+     var game = this.game;
+     var self = this;
+     $('#zmiti-btn-groups div').on('click', function() {
+       var _this = $(this);
+       var index = _this.index();
+       switch (index) {
+         case 0:
+           game.state.start('gameState');
+           self.gameisover = false;
+           self.group.exists = false;
+           self.timerEvent.timer.start();
+           _this.parent().hide();
+           self.flyCount = 0;
+           self.tiggerCount = 0; //
+           self.currentBlood = 21; //恢复血量
+           break;
+         case 1:
+           $('#zmiti-mask').css({
+             display: 'block'
+           }).off('click').on('click', function() {
+             $(this).hide();
+           });
+           break;
+         case 2:
+           break;
+       }
+     })
    },
 
    gameover: function(overSprite) {
      this.gameisover = true;
-     var result1 = this.game.add.image(this.game.world.centerX, this.game.world.centerY, 'result1');
-     result1.scale.set(.5, .5);
-     result1.anchor.setTo(.5, .5);
+     this.timerEvent.timer.stop();
+
+     var group = this.game.add.group();
+
+     this.group = this.group || group;
+     $('#zmiti-btn-groups').css({
+       display: 'block'
+     });
+
+     var result = this.flyCount + this.tiggerCount;
+     if (result <= 5 && false) {
+       var result1 = this.game.add.image(this.game.world.centerX + 20, this.game.world.centerY, 'result1');
+       var seconds = this.game.add.text(this.game.world.centerX + 74, this.game.world.centerY - .3 * viewW / 10, this.counts < 10 ? '0' + this.counts : this.counts, {
+         fill: '#fde957',
+         font: '28px'
+       });
+
+       seconds.rotation = Math.PI / 2;
+       result1.scale.set(.4, .4);
+       result1.anchor.setTo(.5, .5);
+
+       group.add(result1)
+       group.add(seconds)
+     } else if (result > 5 && result <= 15) {
+       var result3 = this.game.add.image(this.game.world.centerX + 20, this.game.world.centerY, 'result3');
+       var seconds = this.game.add.text(this.game.world.centerX - 30, this.game.world.centerY - 50, this.flyCount, {
+         fill: '#fde957',
+         font: '28px'
+       });
+       seconds.rotation = Math.PI / 2;
+
+       var seconds1 = this.game.add.text(this.game.world.centerX - 10, this.game.world.centerY + 74, this.tiggerCount, {
+         fill: '#fde957',
+         font: '28px'
+       });
+
+       seconds.scale.set(.5, .5)
+       seconds1.scale.set(.5, .5)
+       seconds1.rotation = Math.PI / 2;
+       result3.scale.set(.4, .4);
+       result3.anchor.setTo(.5, .5);
+
+       group.add(seconds1);
+       group.add(seconds);
+       group.add(result3);
+
+     } else {
+       var result2 = this.game.add.image(this.game.world.centerX + 20, this.game.world.centerY, 'result2');
+       var seconds = this.game.add.text(this.game.world.centerX + 74, this.game.world.centerY - .3 * viewW / 10, this.flyCount, {
+         fill: '#fde957',
+         font: '28px'
+       });
+       seconds.rotation = Math.PI / 2;
+
+       var seconds1 = this.game.add.text(this.game.world.centerX + 74, result2.y - result2.height / 2 * .4 + 40, this.tiggerCount, {
+         fill: '#fde957',
+         font: '28px'
+       });
+       seconds1.rotation = Math.PI / 2;
+       result2.scale.set(.4, .4);
+       result2.anchor.setTo(.5, .5);
+
+       group.add(seconds1);
+       group.add(seconds);
+       group.add(result2);
+
+
+     }
+
+     this.group = group;
 
      //result1.rotation = Math.PI/2;
 
@@ -1223,7 +1343,7 @@
        background: colorArr[scale * 10]
      })
      this.bloodC.css({
-       borderColor: colorArr[scale * 10]
+       borderColor: '#fff'
      })
    },
    fillDialog: function(date, headimg, title, name) {

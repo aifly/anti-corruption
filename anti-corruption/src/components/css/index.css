@@ -55,7 +55,7 @@ input, textarea {
   width: 6px;
   height: 100px;
   border-radius: 8px;
-  border: 1px solid #11cc03;
+  border: 1px solid #fff;
   top: 50px;
   right: 36px; }
   #zmiti-blood-C span {
@@ -71,6 +71,23 @@ input, textarea {
     transform-origin: top;
     -webkit-transform: scale(1, 1);
     transform: scale(1, 1); }
+
+.zmiti-mask {
+  z-index: 200;
+  display: none;
+  background-size: cover; }
+
+.zmiti-btn-groups {
+  width: 1rem;
+  position: absolute;
+  left: 62px;
+  z-index: 102;
+  top: 50%;
+  -webkit-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+  display: none; }
+  .zmiti-btn-groups div:nth-of-type(2) {
+    margin: 10px 0; }
 
 #iframe {
   background: #fff;
