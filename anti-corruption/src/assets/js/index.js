@@ -687,6 +687,17 @@
                  gameStartAudio.fadeIn(1000);
              });
 
+            // this.audioAutoPlay(gameStartAudio);
+
+            gameStartAudio.fadeIn(1000);  
+            document.addEventListener("WeixinJSBridgeReady", function () {  
+                    gameStartAudio.fadeIn(1000);  
+            }, false);  
+            document.addEventListener('YixinJSBridgeReady', function() {  
+                gameStartAudio.fadeIn(1000);  
+            }, false);
+             //this.gameStartAudio = gameStartAudio;
+
              var bg = game.add.tileSprite(0, 0, game.width * 2, game.height * 2, 'bg');
              // bg.autoScroll(0,-140);
 
@@ -892,6 +903,8 @@
 
                  var qrcode = game.add.image(game.width - 120, game.height - 120, 'qrcode');
                  qrcode.scale.set(.4, .4);
+                 qrcode.exists = false;
+                 self.qrcode = qrcode;
 
                  var counts = 60;
 
@@ -1286,6 +1299,7 @@
                      self.flyCount = 0;
                      self.tiggerCount = 0; //
                      self.currentBlood = 21; //恢复血量
+                     self.qrcode.exists = false;
                      break;
                  case 1:
                      $('#zmiti-mask').css({
@@ -1295,11 +1309,12 @@
                      });
                      break;
                  case 2: //截图。
+
                      var photoAudio = new Phaser.Sound(game, 'photo-audio')
                      photoAudio.play();
                      $('#zmiti-blood-C').css({
                          opacity: 0
-                     })
+                     });
                      game.paused = true;
                      $.ajax({
                          url: 'http://api.zmiti.com/v2/share/base64_image/',
@@ -1341,6 +1356,7 @@
 
      gameover: function(overSprite) {
          this.gameisover = true;
+         this.qrcode.exists = true;
          this.timerEvent.timer.stop();
 
          var group = this.game.add.group();
@@ -1373,7 +1389,7 @@
              group.add(result1)
              group.add(seconds)
          } else if (result > 5 && result <= 15) {
-             var result3 = this.game.add.image(this.game.world.centerX + 20, this.game.world.centerY, 'result3');
+             var result3 = this.game.add.image(this.game.world.centerX + 20, this.game.world.centerY, 'result2');
              var seconds = this.game.add.text(this.game.world.centerX - 30, this.game.world.centerY - 50, this.flyCount, {
                  fill: '#fde957',
                  font: '28px'
@@ -1396,7 +1412,7 @@
              group.add(result3);
 
          } else {
-             var result2 = this.game.add.image(this.game.world.centerX + 20, this.game.world.centerY, 'result2');
+             var result2 = this.game.add.image(this.game.world.centerX + 20, this.game.world.centerY, 'result3');
              var seconds = this.game.add.text(this.game.world.centerX + 74, this.game.world.centerY - .3 * viewW / 10, this.flyCount, {
                  fill: '#fde957',
                  font: '28px'
@@ -1424,6 +1440,16 @@
 
          overSprite.animations.play('run', 10, true);
      },
+     audioAutoPlay:function(audio){  
+            
+            audio.fadeIn(1000);  
+            document.addEventListener("WeixinJSBridgeReady", function () {  
+                    audio.fadeIn(1000);  
+            }, false);  
+            document.addEventListener('YixinJSBridgeReady', function() {  
+                audio.fadeIn(1000);  
+            }, false);  
+        }  ,
      computeBlood: function(currentBlood, allBlood) {
 
          this.span = this.span || $('#zmiti-blood-C span');
