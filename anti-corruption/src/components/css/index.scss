@@ -41,7 +41,7 @@ input, textarea {
 
 #zmiti-blood-C {
 	@include pos(a);
-	opacity: 0;
+	display: none;
 	z-index: 100;
 	width: 6px;
 	height: 100px;
@@ -49,6 +49,19 @@ input, textarea {
 	border: 1px solid #fff;
 	top: 50px;
 	right: 36px;
+
+	&.danger {
+		@include animation(fadeIn .6s linear infinite alternate);
+
+		&:before {
+			content: '';
+			@include pos(a);
+			width: 100%;
+			height: 100%;
+			box-shadow: 0 0 20px rgba(255, 0, 0, .5);
+		}
+
+	}
 
 	span {
 		@include pos(a);
@@ -60,6 +73,17 @@ input, textarea {
 		@include transition(.5s);
 		@include transformOrigin(top);
 		@include transform(scale(1, 1));
+	}
+
+}
+
+@-webkit-keyframes fadeIn {
+	50% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
 	}
 
 }
@@ -96,7 +120,7 @@ input, textarea {
 }
 
 .zmiti-tip {
-	background: rgba(0, 0, 0, .5);
+	//background: rgba(0, 0, 0, .5);
 	@include pos(a);
 	display: none;
 
@@ -111,7 +135,7 @@ input, textarea {
 }
 
 .zmiti-clip-img {
-	z-index: 1000;
+	display: none;
 	box-shadow: 0 0 20px rgba(0, 0, 0, .5);
 	border: 4px solid #fff;
 
@@ -124,7 +148,7 @@ input, textarea {
 
 .zmiti-loading-run {
 	@include pos(a);
-	width: 5rem;
+	width: 8rem;
 	left: 50%;
 	top: 50%;
 	@include transform(translate3d(-50%, -50%, 0));
