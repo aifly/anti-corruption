@@ -627,12 +627,15 @@
              var s = this;
              game.load.onFileComplete.add(function() {
                  this.text = this.text || $('#zmiti-loading-text');
-                 this.text.html(game.load.progress + '%')
+                 this.text.html(game.load.progress + '%');
+                 if(game.load.progress>96){
+                    game.state.start('gameBeforeStartState');
+                    $('#zmiti-loading-C').remove();   
+                 }
              });
 
              game.load.onLoadComplete.add(function() {
-                 game.state.start('gameBeforeStartState');
-                 $('#zmiti-loading-C').remove();
+                 
 
              })
          },
@@ -660,12 +663,12 @@
 
              // this.audioAutoPlay(gameStartAudio);
 
-             gameStartAudio.fadeIn(1000);
+            /// gameStartAudio.play();
              document.addEventListener("WeixinJSBridgeReady", function() {
-                 gameStartAudio.fadeIn(1000);
+                 gameStartAudio.play();
              }, false);
              document.addEventListener('YixinJSBridgeReady', function() {
-                 gameStartAudio.fadeIn(1000);
+                 gameStartAudio.play();
              }, false);
              //this.gameStartAudio = gameStartAudio;
 
@@ -716,14 +719,21 @@
                  var iNow = 0;
                  $('.zmiti-tip').css({
                      display: 'block'
-                 }).on('click', function() {
+                 }).on('touchstart', function() {
                      iNow++;
                      $(this).find('img').attr('src', './src/assets/images/tips2.gif')
                      if (iNow === 2) {
                          iNow = 0;
                          $(this).hide();
                      }
-                 })
+                 });
+
+                 setTimeout(function(){
+                    $('.zmiti-tip').trigger('touchstart');
+                    setTimeout(function(){
+                        $('.zmiti-tip').trigger('touchstart');  
+                    },2000)
+                 },3000)
              });
              beginBtn.scale.set(.5, .5);
              beginBtn.anchor.setTo(.5, .5);
@@ -844,7 +854,8 @@
 
 
                  var s = this;
-                 gamingAuido = new Phaser.Sound(game, 'gaming', .2)
+                 ///gamingAuido = new Phaser.Sound(game, 'gaming', .2);
+                 gamingAuido = game.add.audio('gaming');
                  gamingAuido.play();
 
 
@@ -1061,14 +1072,16 @@
                              s.speed = 111;
                          }
                          this.timer && clearTimeout(this.timer);
-                         this.timer = setTimeout(function() {
-                             !self.gameisover && waitAudio.play();
-                             !self.gameisover && $('.zmiti-tip').css({
-                                 display: 'block'
-                             }).off('touchstart').on('touchstart', function() {
-                                 $(this).hide()
-                             }).find('img').attr('src', './src/assets/images/tips1.gif')
-                         }, 5000)
+                         if(!self.gameisover && !game.paused){
+                                 this.timer = setTimeout(function() {
+                                 !self.gameisover && waitAudio.play();
+                                 !self.gameisover && !game.paused && $('.zmiti-tip').css({
+                                     display: 'block'
+                                 }).off('touchstart').on('touchstart', function() {
+                                     $(this).hide()
+                                 }).find('img').attr('src', './src/assets/images/tips1.gif')
+                             }, 5000)
+                         }
                      }
 
                  };
@@ -1141,10 +1154,10 @@
                          gamingAuido.pause();
                      }
                  } else {
-                     fastAudio.stop();
                      windSprite.exists = false;
                      if (!gamingAuido.isPlaying) {
-                         gamingAuido.play();
+                         fastAudio.pause();
+                         gamingAuido.resume();
                      }
                  }
 
@@ -1365,7 +1378,7 @@
                                  }).attr('src', src);
 
                                  setTimeout(function() {
-                                     _this.classList.add('active');
+                                     _this.addClass('active');
                                      $('canvas').css({
                                          opacity: 0
                                      });
