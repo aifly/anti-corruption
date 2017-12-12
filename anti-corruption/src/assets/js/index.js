@@ -631,8 +631,8 @@
              });
 
              game.load.onLoadComplete.add(function() {
-                game.state.start('gameBeforeStartState');
-                $('#zmiti-loading-C').remove();
+                 game.state.start('gameBeforeStartState');
+                 $('#zmiti-loading-C').remove();
 
              })
          },
@@ -727,7 +727,7 @@
              });
              beginBtn.scale.set(.5, .5);
              beginBtn.anchor.setTo(.5, .5);
-             // beginBtn.exists = false;
+             beginBtn.exists = false;
              this.beginBtn = beginBtn;
 
              var startX = 62;
