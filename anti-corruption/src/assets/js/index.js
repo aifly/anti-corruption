@@ -1175,8 +1175,12 @@
                      tiggerSprite.y = defaultY;
                  }
 
+
                  if (flySprite.y < -100) {
-                     flySprite.y = defaultY;
+                    //flySprite.body.velocity = new Phaser.Point(0, -flySpeed)
+                    //flySpeed*=-1;
+                    flySpeed = 50;
+                    flySprite.rotation =Math.PI/3*4;                        
                  }
 
                  if (energy.y < -100) {
@@ -1229,6 +1233,7 @@
                  energy.body.velocity = new Phaser.Point(0, energySpeed - animation.speed)
                  energy1.body.velocity = new Phaser.Point(0, energySpeed + 30 - animation.speed)
                  flySprite.body.velocity = new Phaser.Point(0, flySpeed - animation.speed)
+                 console.log(flySpeed)
                  tiggerSprite.body.velocity = new Phaser.Point(0, tiggerSpeed - animation.speed)
 
                  ///document.title = this.speed;
@@ -1455,6 +1460,7 @@
      },
 
      gameover: function(overSprite) {
+        return
          this.gameisover = true;
          $('.zmiti-dialog-C.show').addClass('hide').removeClass('show');
          // this.qrcode.exists = true;
