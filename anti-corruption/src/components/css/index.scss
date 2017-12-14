@@ -20,8 +20,8 @@ html, body {
 
 body {
 	font-family: "Helvetica Neue", 'Helvetica', "Microsoft YaHei", '微软雅黑', arial, sans-serif;
-	overflow-x: hidden;
 	font-size: 14px;
+	overflow: hidden;
 }
 
 img {
@@ -339,6 +339,122 @@ input, textarea {
 		&.animate {
 		}
 
+	}
+
+}
+
+.zmiti-hero-C {
+	display: none;
+	left: -4.5rem;
+	@include transform(rotate(90deg));
+	width: 12rem;
+
+	.zmiti-hero {
+		width: 6rem;
+		margin: 0 auto;
+	}
+
+	&>div {
+		width: 100%;
+	}
+
+	.zmiti-fly-count {
+		@include displayBox(horizontal);
+		margin-bottom: .5rem;
+
+		span {
+			display: block;
+			-webkit-box-flex: 1;
+
+			label {
+				font-weight: normal;
+				color: #fff;
+
+				&:nth-of-type(1) {
+					color: #eab42e;
+					margin: 0 .3rem;
+				}
+
+			}
+
+			img {
+				width: 1rem;
+			}
+
+		}
+
+	}
+
+	h1 {
+		width: 100%;
+		text-align: center;
+		font-weight: normal;
+	}
+
+	.zmiti-scroll-C {
+		width: 100%;
+		height: 4.2rem;
+		overflow: hidden;
+		@include pos(r);
+
+		&>div {
+			height: 100%;
+			width: 100%;
+			color: #fff;
+
+			ul {
+				display: block;
+				float: left;
+				width: 50%;
+				box-sizing: border-box;
+				overflow: hidden;
+
+				li {
+					@include displayBox(horizontal);
+					margin: 10px 0;
+					-webkit-box-pack: start;
+
+					.zmiti-list-img {
+						width: 1rem;
+						height: 1rem;
+						background: #999;
+						@include br();
+						margin-right: .2rem;
+					}
+
+					.zmiti-list-title {
+						max-width: 3.5rem;
+						display: inline-block;
+						margin-right: 10px;
+						color: #fff;
+						font-weight: normal;
+						text-decoration: none;
+						min-width: 3.5rem;
+					}
+
+					span {
+						display: inline-block;
+						text-decoration: underline;
+						color: #fff;
+						font-weight: bold;
+					}
+
+				}
+
+				&:nth-of-type(2) {
+				}
+
+			}
+
+		}
+
+	}
+
+	.zmiti-next {
+		text-align: right;
+		color: #fff;
+		width: 80%;
+		margin-top: 20px;
 	}
 
 }

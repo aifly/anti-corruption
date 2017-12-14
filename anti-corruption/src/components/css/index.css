@@ -34,8 +34,8 @@ html, body {
 
 body {
   font-family: "Helvetica Neue", 'Helvetica', "Microsoft YaHei", '微软雅黑', arial, sans-serif;
-  overflow-x: hidden;
-  font-size: 14px; }
+  font-size: 14px;
+  overflow: hidden; }
 
 img {
   border: none;
@@ -254,6 +254,85 @@ input, textarea {
     top: 100px;
     opacity: 0;
     z-index: 10; }
+
+.zmiti-hero-C {
+  display: none;
+  left: -4.5rem;
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+  width: 12rem; }
+  .zmiti-hero-C .zmiti-hero {
+    width: 6rem;
+    margin: 0 auto; }
+  .zmiti-hero-C > div {
+    width: 100%; }
+  .zmiti-hero-C .zmiti-fly-count {
+    display: -webkit-box;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    -webkit-box-orient: horizontal;
+    margin-bottom: .5rem; }
+    .zmiti-hero-C .zmiti-fly-count span {
+      display: block;
+      -webkit-box-flex: 1; }
+      .zmiti-hero-C .zmiti-fly-count span label {
+        font-weight: normal;
+        color: #fff; }
+        .zmiti-hero-C .zmiti-fly-count span label:nth-of-type(1) {
+          color: #eab42e;
+          margin: 0 .3rem; }
+      .zmiti-hero-C .zmiti-fly-count span img {
+        width: 1rem; }
+  .zmiti-hero-C h1 {
+    width: 100%;
+    text-align: center;
+    font-weight: normal; }
+  .zmiti-hero-C .zmiti-scroll-C {
+    width: 100%;
+    height: 4.2rem;
+    overflow: hidden;
+    position: relative; }
+    .zmiti-hero-C .zmiti-scroll-C > div {
+      height: 100%;
+      width: 100%;
+      color: #fff; }
+      .zmiti-hero-C .zmiti-scroll-C > div ul {
+        display: block;
+        float: left;
+        width: 50%;
+        box-sizing: border-box;
+        overflow: hidden; }
+        .zmiti-hero-C .zmiti-scroll-C > div ul li {
+          display: -webkit-box;
+          -webkit-box-align: center;
+          -webkit-box-pack: center;
+          -webkit-box-orient: horizontal;
+          margin: 10px 0;
+          -webkit-box-pack: start; }
+          .zmiti-hero-C .zmiti-scroll-C > div ul li .zmiti-list-img {
+            width: 1rem;
+            height: 1rem;
+            background: #999;
+            border-radius: 50%;
+            margin-right: .2rem; }
+          .zmiti-hero-C .zmiti-scroll-C > div ul li .zmiti-list-title {
+            max-width: 3.5rem;
+            display: inline-block;
+            margin-right: 10px;
+            color: #fff;
+            font-weight: normal;
+            text-decoration: none;
+            min-width: 3.5rem; }
+          .zmiti-hero-C .zmiti-scroll-C > div ul li span {
+            display: inline-block;
+            text-decoration: underline;
+            color: #fff;
+            font-weight: bold; }
+  .zmiti-hero-C .zmiti-next {
+    text-align: right;
+    color: #fff;
+    width: 80%;
+    margin-top: 20px; }
 
 @-webkit-keyframes energyMove {}
 @-webkit-keyframes jump {
