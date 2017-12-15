@@ -347,11 +347,11 @@ input, textarea {
 	display: none;
 	left: -4.5rem;
 	@include transform(rotate(90deg));
-	width: 12rem;
+	width: 13rem;
 
 	.zmiti-hero {
 		width: 6rem;
-		margin: 0 auto;
+		margin: .5rem auto 0;
 	}
 
 	&>div {
@@ -413,6 +413,7 @@ input, textarea {
 					@include displayBox(horizontal);
 					margin: 10px 0;
 					-webkit-box-pack: start;
+					box-sizing: border-box;
 
 					.zmiti-list-img {
 						width: 1rem;
@@ -429,10 +430,17 @@ input, textarea {
 						color: #fff;
 						font-weight: normal;
 						text-decoration: none;
-						min-width: 3.5rem;
+						min-width: 3.2rem;
 					}
 
+					@include pos(r);
+
 					span {
+						&.zmiti-detail-btn {
+							@include pos(a);
+							right: 10px;
+						}
+
 						display: inline-block;
 						text-decoration: underline;
 						color: #fff;

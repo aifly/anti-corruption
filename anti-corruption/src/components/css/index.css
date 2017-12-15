@@ -260,10 +260,10 @@ input, textarea {
   left: -4.5rem;
   -webkit-transform: rotate(90deg);
   transform: rotate(90deg);
-  width: 12rem; }
+  width: 13rem; }
   .zmiti-hero-C .zmiti-hero {
     width: 6rem;
-    margin: 0 auto; }
+    margin: .5rem auto 0; }
   .zmiti-hero-C > div {
     width: 100%; }
   .zmiti-hero-C .zmiti-fly-count {
@@ -308,7 +308,9 @@ input, textarea {
           -webkit-box-pack: center;
           -webkit-box-orient: horizontal;
           margin: 10px 0;
-          -webkit-box-pack: start; }
+          -webkit-box-pack: start;
+          box-sizing: border-box;
+          position: relative; }
           .zmiti-hero-C .zmiti-scroll-C > div ul li .zmiti-list-img {
             width: 1rem;
             height: 1rem;
@@ -322,12 +324,15 @@ input, textarea {
             color: #fff;
             font-weight: normal;
             text-decoration: none;
-            min-width: 3.5rem; }
+            min-width: 3.2rem; }
           .zmiti-hero-C .zmiti-scroll-C > div ul li span {
             display: inline-block;
             text-decoration: underline;
             color: #fff;
             font-weight: bold; }
+            .zmiti-hero-C .zmiti-scroll-C > div ul li span.zmiti-detail-btn {
+              position: absolute;
+              right: 10px; }
   .zmiti-hero-C .zmiti-next {
     text-align: right;
     color: #fff;
