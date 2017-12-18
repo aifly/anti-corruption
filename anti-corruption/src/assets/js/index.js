@@ -842,13 +842,12 @@
 
              // this.audioAutoPlay(gameStartAudio);
 
-             /// gameStartAudio.play();
-             document.addEventListener("WeixinJSBridgeReady", function() {
-                 gameStartAudio.play();
-             }, false);
-             document.addEventListener('YixinJSBridgeReady', function() {
-                 gameStartAudio.play();
-             }, false);
+             
+                document.addEventListener("WeixinJSBridgeReady", function() {
+                    WeixinJSBridge.invoke('getNetworkType', {}, function(e) {
+                        gameStartAudio.fadeIn(1000);
+                    });
+                }, false);
              //this.gameStartAudio = gameStartAudio;
 
              var bg = game.add.tileSprite(0, 0, game.width * 2, game.height * 2, 'bg');
@@ -918,7 +917,7 @@
              });
              beginBtn.scale.set(.5, .5);
              beginBtn.anchor.setTo(.5, .5);
-             //beginBtn.exists = false;
+             beginBtn.exists = false;
              this.beginBtn = beginBtn;
 
              var startX = 62;
@@ -1144,6 +1143,7 @@
                  ///gamingAuido = new Phaser.Sound(game, 'gaming', .2);
                  gamingAuido = game.add.audio('gaming');
                  gamingAuido.play();
+
 
 
 
