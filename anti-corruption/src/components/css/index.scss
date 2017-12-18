@@ -345,13 +345,31 @@ input, textarea {
 
 .zmiti-hero-C {
 	display: none;
-	left: -4.5rem;
-	@include transform(rotate(90deg));
-	width: 13rem;
+	left: -5rem;
+	@include transform(rotate(90deg) translate3d(0, 10rem, 0));
+
+	&.active {
+		@include transition(5s linear);
+		@include transform(rotate(90deg) translate3d(0, 0, 0));
+	}
+
+	width: 12rem;
+
+	&:before {
+		content: '';
+		@include pos(a);
+		width: 110%;
+		left: -5%;
+		top: .8rem;
+		z-index: -1;
+		height: 6.8rem;
+		@include br(10px);
+		background: rgba(0, 0, 0, .2);
+	}
 
 	.zmiti-hero {
-		width: 6rem;
-		margin: .5rem auto 0;
+		width: 4.5rem;
+		margin: 0 auto 0;
 	}
 
 	&>div {
@@ -361,6 +379,8 @@ input, textarea {
 	.zmiti-fly-count {
 		@include displayBox(horizontal);
 		margin-bottom: .5rem;
+		@include pos(r);
+		top: .4rem;
 
 		span {
 			display: block;
@@ -369,6 +389,7 @@ input, textarea {
 			label {
 				font-weight: normal;
 				color: #fff;
+				font-size: .5rem;
 
 				&:nth-of-type(1) {
 					color: #eab42e;
@@ -378,7 +399,7 @@ input, textarea {
 			}
 
 			img {
-				width: 1rem;
+				width: .5rem;
 			}
 
 		}
@@ -387,13 +408,14 @@ input, textarea {
 
 	h1 {
 		width: 100%;
+		font-size: 14px;
 		text-align: center;
 		font-weight: normal;
 	}
 
 	.zmiti-scroll-C {
 		width: 100%;
-		height: 4.2rem;
+		height: 4.5rem;
 		overflow: hidden;
 		@include pos(r);
 
@@ -401,17 +423,28 @@ input, textarea {
 			height: 100%;
 			width: 100%;
 			color: #fff;
+			padding-bottom: 1rem;
+			//margin-top: 4.5rem;
+			font-size: 12px;
 
 			ul {
 				display: block;
 				float: left;
-				width: 50%;
+				width: 48%;
 				box-sizing: border-box;
 				overflow: hidden;
 
+				&:nth-of-type(1) {
+					margin-right: 2%;
+				}
+
+				&:nth-of-type(2) {
+					margin-left: 2%;
+				}
+
 				li {
 					@include displayBox(horizontal);
-					margin: 10px 0;
+					margin: .5rem 0;
 					-webkit-box-pack: start;
 					box-sizing: border-box;
 
@@ -424,13 +457,13 @@ input, textarea {
 					}
 
 					.zmiti-list-title {
-						max-width: 3.5rem;
+						max-width: 3rem;
 						display: inline-block;
 						margin-right: 10px;
 						color: #fff;
 						font-weight: normal;
 						text-decoration: none;
-						min-width: 3.2rem;
+						min-width: 2.2rem;
 					}
 
 					@include pos(r);

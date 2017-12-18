@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <script>
     	document.getElementsByTagName('html')[0].style.fontSize = document.documentElement.clientWidth / 10+'px';
-      document.addEventListener('touchmove',function(e){e.preventDefault()})
+      document.addEventListener('touchmove',function(e){e.preventDefault(),{passive:true}})
     </script>
     <link rel="stylesheet" type="text/css" href="./src/components/css/index.css">
     <title>邀你来PUSH贪官</title>
@@ -56,31 +56,32 @@
      <img class="zmiti-clip-img lt-full" />
 
      <div class="zmiti-hero-C lt-full">
-       <h1>
-         <div class="zmiti-hero"><img src="./src/assets/images/hero.png"></div>
-         <div class="zmiti-fly-count">
-           <span>
-             <img src="./src/assets/images/tigger-ico.png">
-             <label>X</label>
-             <label id="zmiti-tigger-count">0</label>
-           </span>
-           <span>
-             <img src="./src/assets/images/fly-ico.png">
-             <label>X</label>
-             <label id="zmiti-fly-count">0</label>
-           </span>
-         </div>
-       </h1>
-       <div class="zmiti-scroll-C">
-         <div>
-           <ul id="zmiti-tigger-list">
-             
-           </ul>
-           <ul id="zmiti-fly-list">
-             
-           </ul>
-         </div>
-       </div>
+           <h1>
+             <div class="zmiti-hero"><img src="./src/assets/images/hero.png"></div>
+             <div class="zmiti-fly-count">
+               <span>
+                 <img src="./src/assets/images/tigger-ico.png">
+                 <label>X</label>
+                 <label id="zmiti-tigger-count">0</label>
+               </span>
+               <span>
+                 <img src="./src/assets/images/fly-ico.png">
+                 <label>X</label>
+                 <label id="zmiti-fly-count">0</label>
+               </span>
+             </div>
+
+           </h1>
+           <div  class="zmiti-scroll-C">
+             <div>
+               <ul id="zmiti-tigger-list">
+                 
+               </ul>
+               <ul id="zmiti-fly-list">
+                 
+               </ul>
+             </div>
+           </div>
        <div class="zmiti-next" id="zmiti-next">跳过>></div>
      </div>
 

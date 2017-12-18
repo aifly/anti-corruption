@@ -101,7 +101,7 @@
                      title: '接受组织审查',
                      name: '迪里木拉提·吾甫尔江',
                      date: '2017/04/06',
-                     headimg: './src/assets/images/wfej.png',
+                     headimg: './src/assets/images/dlmlt_wpej.png',
                      href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=1725507&isview=1&homeshow=1'
                  }, {
                      title: '严重违纪被“双开”',
@@ -757,6 +757,7 @@
              var game = this.game;
              this.game = game;
              game.load.image('jump', './src/assets/images/jump.png');
+             game.load.image('energy-less', './src/assets/images/energy-less.png');
              game.load.image('background', './src/assets/images/background.jpg');
              game.load.image('clip-bg', './src/assets/images/clip-bg.jpg');
              game.load.image('clip-content', './src/assets/images/clip-content.png');
@@ -924,7 +925,7 @@
              var sprite = game.add.sprite(startX, -100, 'person');
              this.sprite = sprite;
              sprite.scale.set(.3, .3)
-                 //sprite.exists = false;
+             //sprite.exists = false;
              animation = sprite.animations.add('run', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
              sprite.animations.play('run', 25, true);
 
@@ -974,6 +975,27 @@
 
 
          }
+
+     },
+
+     createMoveEnergy(energyObj, blood) {
+         var game = this.game;
+         var energy = game.add.sprite(viewW / 2 - 30, game.height, 'energy');
+         energy.x = energyObj.x;
+         energy.y = energyObj.y;
+
+         var tween = game.add.tween(energy);
+
+         tween.to({
+             x: blood.x,
+             y: blood.y,
+         }, 1000);
+
+         tween.start();
+
+         setTimeout(function() {
+             energy.kill();
+         }, 1000)
 
      },
 
@@ -1109,6 +1131,7 @@
                  tiggerKill,
                  text,
                  slowText,
+                 blood,
                  jumpToAddEnergyText;
 
              self.currentBlood = currentBlood;
@@ -1142,12 +1165,12 @@
 
                  ///game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
                  bg.scale.set(.6, .6)
-                     ///console.log(bg,game.height);
+                 ///console.log(bg,game.height);
 
                  //行走的人物
                  sprite = game.add.sprite(startX, 100, 'person');
                  sprite.scale.set(.3, .3)
-                     //sprite.exists = false;
+                 //sprite.exists = false;
                  animation = sprite.animations.add('run', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
                  sprite.animations.play('run', 25, true);
 
@@ -1159,7 +1182,7 @@
                  windSprite.scale.set(.5, .5)
 
 
-                 var blood = game.add.image(game.width - 50, 10, 'blood');
+                 blood = game.add.image(game.width - 50, 10, 'blood');
                  blood.scale.set(.7, .7);
 
                  /* var qrcode = game.add.image(game.width - 110, game.height - 110, 'qrcode');
@@ -1191,16 +1214,19 @@
                  slowText.rotation = Math.PI / 2;
                  slowText.exists = false;
 
-                 jumpToAddEnergyText = game.add.text(game.width / 2 + 80, game.height / 5, '点击屏幕摘取能量~', {
-                     fill: '#fff',
-                     font: '14px Arial'
-                 });
-
+                 jumpToAddEnergyText = game.add.image(game.width / 2 + 2.5 * viewW / 10, game.height / 3, 'energy-less');
+                 jumpToAddEnergyText.scale.set(.3, .3);
                  self.jumpToAddEnergyText = jumpToAddEnergyText;
 
+                 var jumpToAddEnergyTextTween = game.add.tween(jumpToAddEnergyText.scale);
+                 jumpToAddEnergyTextTween.to({
+                     x: .35,
+                     y: .33
+                 }, 500, Phaser.Easing.Linear.None, true, 0, false, true)
+
+                 jumpToAddEnergyTextTween.yoyo = false;
 
                  jumpToAddEnergyText.anchor.setTo(.5, .5);
-                 jumpToAddEnergyText.rotation = Math.PI / 2;
                  jumpToAddEnergyText.exists = false;
 
                  var tween = game.add.tween(text.scale);
@@ -1228,7 +1254,9 @@
                      if (self.allSeconds < 0) {
                          //game over
                          event.timer.stop(); //时间到。游戏结束
-                         self.fillHeroList();
+                         text.exists = false;
+                         self.timerover = true;
+                         //self.fillHeroList();
 
                      } else {
                          var s = self.allSeconds < 20 ? '' : ' s'
@@ -1449,6 +1477,16 @@
                      energy1.y = defaultY;
                  }
 
+                 if (self.timerover) { //时间到了
+                     //self.timerover = false;
+                     sprite.y++;
+                     if (sprite.y > defaultY) {
+                         self.fillHeroList();
+                         //self.game.paused = true;
+                     }
+                     //
+                 }
+
                  bg.autoScroll(0, !this.speed ? -50 : (this.speed * 3 + 200) * -1);
 
                  if (jumper.x < startX) {
@@ -1464,6 +1502,18 @@
 
                  animation.speed = this.speed / 3 < 10 ? 10 : this.speed / 3;
                  animation.speed = animation.speed > 25 ? 25 : animation.speed;
+
+
+                 if (self.showResult) {
+                     self.group.x += 2;
+                     if (self.group.x >= 0) {
+                         self.group.x = 0;
+                         self.game.paused = true;
+                         $('#zmiti-btn-groups').css({
+                             display: 'block'
+                         });
+                     }
+                 }
 
                  if (animation.speed > 17) {
                      windSprite.exists = true;
@@ -1509,7 +1559,7 @@
                      }
                      addEnergy.play();
                      self.computeBlood(self.currentBlood, allBlood)
-                         //energy.exists = false;
+                     self.createMoveEnergy(energy, blood);
                      energy.y = defaultY;
                  })
 
@@ -1519,22 +1569,27 @@
 
                      addEnergy.play();
 
-
                      if (self.currentBlood > allBlood) {
                          self.currentBlood = allBlood;
                      }
                      self.computeBlood(self.currentBlood, allBlood)
 
+                     self.createMoveEnergy(energy1, blood);
                      energy1.y = defaultY;
+
                  })
 
-                 if (self.overSprite && !self.gameisover) {
+                 if (self.overSprite) {
 
                      self.overSprite.y--;
                      if (self.overSprite.y < -200) {
                          self.overSprite.kill();
                          self.overSprite = null;
-                         self.game.paused = true;
+                         self.flyArr.forEach(function(fly) {
+                             fly.flySprite.exists = false;
+                         })
+                         // self.game.paused = true;
+
                      }
                  }
 
@@ -1545,10 +1600,73 @@
                  var overSprite = null;
 
                  game.physics.arcade.overlap(sprite, tiggerSprite, function() {
-                         //console.log(tiggerSprite.x, tiggerSprite.y)
+                     //console.log(tiggerSprite.x, tiggerSprite.y)
 
-                         self.currentBlood -= 4;
-                         self.computeBlood(Math.max(self.currentBlood, 0), allBlood)
+                     self.currentBlood -= 4;
+                     self.computeBlood(Math.max(self.currentBlood, 0), allBlood)
+
+
+                     if (self.currentBlood < 0) {
+                         self.currentBlood = 0;
+
+                         overSprite = game.add.sprite(startX, 70, 'over-sprite');
+                         self.overSprite = overSprite;
+                         var ani = overSprite.animations.add('run', [0, 1, 2, 3]);
+
+                         overSprite.scale.set(.4, .4);
+                         overSprite.exists = false;
+
+                         sprite.exists = false;
+
+                         var personDie = game.add.image(startX, 100, 'person-die');
+                         self.personDie = personDie;
+                         personDie.scale.set(.4, .4);
+                         jumper.exists = false;
+                         jumper.kill();
+
+
+                         /*  dieTigger = game.add.image(tiggerSprite.x, tiggerSprite.y, 'tigger-die');
+                           dieTigger.scale.set(.3, .3);*/
+                         self.gameisover = true;
+                         setTimeout(function() {
+                             overSprite.exists = true;
+                             self.fillHeroList(overSprite);
+                             tiggerSprite.kill();
+                             //flySprite.kill();
+                             personDie.kill();
+                             dieTigger.kill();
+                         }, 1000)
+                         game.world.setChildIndex(tiggerSprite, 10);
+                     } else {
+                         self.tiggerCount++;
+                         tiggerKill.exists = true;
+                         tiggerKill.y = tiggerSprite.y
+                         setTimeout(function() {
+                             tiggerKill.exists = false;
+                         }, 350)
+                         dieTigger = game.add.image(tiggerSprite.x, tiggerSprite.y, 'tigger-die');
+                         dieTigger.scale.set(.3, .3);
+                         game.world.setChildIndex(dieTigger, 1);
+                         //console.log(game.world.children)
+                         tiggerDieAudio.play()
+                         tiggerSprite.y = defaultY;
+                         self.fillDialog('tiggerList');
+                     }
+
+
+
+                     //tiggerSprite.exists = false; //
+
+
+                 })
+                 //和苍蝇碰撞上了。
+
+                 self.flyArr.forEach(function(sprite, i) {
+                     sprite.die();
+                     var flySprite = sprite.flySprite;
+                     game.physics.arcade.overlap(jumper, flySprite, function() {
+                         self.currentBlood -= 2;
+
 
 
                          if (self.currentBlood < 0) {
@@ -1581,41 +1699,6 @@
                                  personDie.kill();
                                  dieTigger.kill();
                              }, 1000)
-                             game.world.setChildIndex(tiggerSprite, 10);
-                         } else {
-                             self.tiggerCount++;
-                             tiggerKill.exists = true;
-                             tiggerKill.y = tiggerSprite.y
-                             setTimeout(function() {
-                                 tiggerKill.exists = false;
-                             }, 350)
-                             dieTigger = game.add.image(tiggerSprite.x, tiggerSprite.y, 'tigger-die');
-                             dieTigger.scale.set(.3, .3);
-                             game.world.setChildIndex(dieTigger, 1);
-                             //console.log(game.world.children)
-                             tiggerDieAudio.play()
-                             tiggerSprite.y = defaultY;
-                             self.fillDialog('tiggerList');
-                         }
-
-
-
-                         //tiggerSprite.exists = false; //
-
-
-                     })
-                     //和苍蝇碰撞上了。
-
-                 self.flyArr.forEach(function(sprite, i) {
-                     sprite.die();
-                     var flySprite = sprite.flySprite;
-                     game.physics.arcade.overlap(jumper, flySprite, function() {
-                         self.currentBlood -= 2;
-
-
-
-                         if (self.currentBlood < 0) {
-                             self.currentBlood = 0;
 
                          } else {
                              self.fillDialog('flyList');
@@ -1769,7 +1852,7 @@
          $('.zmiti-dialog-C.show').addClass('hide').removeClass('show');
          // this.qrcode.exists = true;
          setTimeout(function() {
-             this.game.paused = true;
+             //this.game.paused = true;
          }.bind(this), 1000)
          this.timerEvent.timer.stop();
 
@@ -1791,9 +1874,7 @@
 
          var rem = viewW / 10;
          this.group = this.group || group;
-         $('#zmiti-btn-groups').css({
-             display: 'block'
-         });
+
 
          var result = this.flyCount + this.tiggerCount;
          if (result <= 5) {
@@ -1871,13 +1952,15 @@
 
          }
 
+         group.x = -viewW;
+
          this.group = group;
 
 
 
          //result1.rotation = Math.PI/2;
 
-         overSprite && overSprite.animations.play('run', 10, true);
+
      },
      audioAutoPlay: function(audio) {
 
@@ -2014,15 +2097,15 @@
                      nonceStr: 'Wm3WZYTPz0wzccnW', // 必填，生成签名的随机串
                      signature: data.signature, // 必填，签名，见附录1
                      jsApiList: ['checkJsApi',
-                             'onMenuShareTimeline',
-                             'onMenuShareAppMessage',
-                             'onMenuShareQQ',
-                             'onMenuShareWeibo',
-                             'hideMenuItems',
-                             'showMenuItems',
-                             'hideAllNonBaseMenuItem',
-                             'showAllNonBaseMenuItem'
-                         ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+                         'onMenuShareTimeline',
+                         'onMenuShareAppMessage',
+                         'onMenuShareQQ',
+                         'onMenuShareWeibo',
+                         'hideMenuItems',
+                         'showMenuItems',
+                         'hideAllNonBaseMenuItem',
+                         'showAllNonBaseMenuItem'
+                     ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
                  });
 
                  wx.ready(function() {
@@ -2062,7 +2145,7 @@
          });
 
      },
-     fillHeroList: function() {
+     fillHeroList: function(overSprite) {
          $('.zmiti-hero-C').css({
              display: 'block'
          })
@@ -2073,29 +2156,13 @@
          })
 
 
-         var clipBg = this.game.add.image(0, 0, 'clip-bg');
+         /*   this['tiggerListkilled'] = this.data().tiggerList.concat([]);
+            this['flyListkilled'] = this.data().flyList.concat([]);*/
 
 
-         this.clipBg = clipBg;
-         var h = clipBg.height;
-
-         clipBg.scale.set(viewH / clipBg.height, viewH / clipBg.height)
-
-         var clipContent = this.game.add.image(viewW - 373 * (viewH / h) - 0, 0, 'clip-content');
-         this.flyArr.forEach(function(fly, i) {
-             fly.flySprite.exists = false
-         })
-         this.game.paused = true;
-         clipContent.scale.set(viewH / h, viewH / h)
-
-         this.clipContent = clipContent;
-         /* this['tiggerListkilled'] = this.data().tiggerList.concat([]);
-          this['flyListkilled'] = this.data().flyList.concat([]);*/
-
-         this['tiggerListkilled'].length = 5;
-         this['flyListkilled'].length = 5;
          $('.zmiti-dialog-C.show').addClass('hide').removeClass('show');
-
+         /*this['flyListkilled'].length = 10;
+         this['tiggerListkilled'].length = 10;*/
          $('#zmiti-fly-count').html(this['flyListkilled'].length)
          $('#zmiti-tigger-count').html(this['tiggerListkilled'].length)
          var tiggerListHtml = '';
@@ -2123,16 +2190,15 @@
          });
          $('#zmiti-fly-list').append(flyListHtml);
 
-         var scroll = new IScroll('.zmiti-scroll-C', {
-             mouseWheel: true,
+         /**/
 
-
-         });
-
-         $('#zmiti-next').on('click', function() {
+         var zmitiNext = $('#zmiti-next');
+         zmitiNext.on('click', function() {
+             self.nextTimer && clearTimeout(self.nextTimer);
              $('.zmiti-hero-C').css({
-                 display: 'none'
+                 left: '10rem'
              })
+             self.showResult = true;
              self.gameover()
          })
 
@@ -2146,13 +2212,36 @@
              self.iframeC.find('iframe').attr('src', href);
          });
          var h = Math.max($('#zmiti-tigger-list').width(), $('#zmiti-fly-list').width());
-         $('.zmiti-scroll-C>div').height(h)
+         var div = $('.zmiti-scroll-C>div').height(h);
+
+         var scroll = new IScroll('.zmiti-scroll-C', {
+             mouseWheel: true,
+         });
 
          setTimeout(function() {
+             $('.zmiti-hero-C').addClass('active')
+             // div.parent().addClass('active');
+         }, 500)
+         console.log(h)
+         var rem = viewW / 10;
+         setTimeout(function() {
+
              scroll.refresh();
 
-             scroll.scrollTo(0, -(h - 4.2 * viewW / 10), 50 * 1000);
-         }, 2000)
+             scroll.scrollTo(0, -h + 4.5 * rem, 10 * 1000, IScroll.utils.linear);
+
+
+             self.nextTimer = setTimeout(function() {
+
+                 zmitiNext.trigger('click');
+
+             }, 10 * 1000);
+
+
+
+         }, 5000 + 1000)
+
+         overSprite && overSprite.animations.play('run', 10, true);
      }
 
  }

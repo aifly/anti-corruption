@@ -213,6 +213,12 @@
 					return Math.sqrt(1 - (--k * k));
 				}
 			},
+			linear: {
+				style: 'cubic-bezier(0, 0, 1, 0.99)',
+				fn: function(k) {
+					return k;
+				}
+			},
 			back: {
 				style: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
 				fn: function(k) {
