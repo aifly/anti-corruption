@@ -842,12 +842,12 @@
 
              // this.audioAutoPlay(gameStartAudio);
 
-             
-                document.addEventListener("WeixinJSBridgeReady", function() {
-                    WeixinJSBridge.invoke('getNetworkType', {}, function(e) {
-                        gameStartAudio.fadeIn(1000);
-                    });
-                }, false);
+
+             document.addEventListener("WeixinJSBridgeReady", function() {
+                 WeixinJSBridge.invoke('getNetworkType', {}, function(e) {
+                     gameStartAudio.fadeIn(1000);
+                 });
+             }, false);
              //this.gameStartAudio = gameStartAudio;
 
              var bg = game.add.tileSprite(0, 0, game.width * 2, game.height * 2, 'bg');
@@ -917,7 +917,7 @@
              });
              beginBtn.scale.set(.5, .5);
              beginBtn.anchor.setTo(.5, .5);
-             beginBtn.exists = false;
+             //beginBtn.exists = false;
              this.beginBtn = beginBtn;
 
              var startX = 62;
@@ -1032,11 +1032,15 @@
                      this.flySprite.y = 0;
                      this.flySprite.exists = false;
                      this.flySprite.kill();
-                     var fly = new Fly({
-                         type: 'fly1'
-                     });
-                     fly.die();
-                     self.flyArr.push(fly)
+
+                     if (!self.timerover) {
+                         var fly = new Fly({
+                             type: 'fly1'
+                         });
+                         fly.die();
+
+                         self.flyArr.push(fly)
+                     }
 
                  }
              } else {
@@ -1044,11 +1048,15 @@
                      this.flySprite.y = 0;
                      this.flySprite.exists = false;
                      this.flySprite.kill();
-                     var fly = new Fly({
-                         type: 'fly'
-                     });
-                     fly.die();
-                     self.flyArr.push(fly)
+
+                     if (!self.timerover) {
+                         var fly = new Fly({
+                             type: 'fly'
+                         });
+                         fly.die();
+                         self.flyArr.push(fly)
+                     }
+
 
                  }
              }
@@ -1056,21 +1064,27 @@
                  this.flySprite.x = 0;
                  this.flySprite.exists = false;
                  this.flySprite.kill();
-                 var fly = new Fly({
-                     type: 'fly1'
-                 });
-                 fly.die();
-                 self.flyArr.push(fly)
+
+                 if (!self.timerover) {
+                     var fly = new Fly({
+                         type: 'fly1'
+                     });
+                     fly.die();
+                     self.flyArr.push(fly)
+                 }
+
              }
              if (this.flySprite.x > viewW) {
                  this.flySprite.x = 0;
                  this.flySprite.exists = false;
                  this.flySprite.kill();
-                 var fly = new Fly({
-                     type: 'fly'
-                 });
-                 fly.die();
-                 self.flyArr.push(fly)
+                 if (!self.timerover) {
+                     var fly = new Fly({
+                         type: 'fly'
+                     });
+                     fly.die();
+                     self.flyArr.push(fly)
+                 }
              }
 
              this.flySprite.body.velocity = new Phaser.Point(this.speedX, this.type === 'fly' ? this.speedY * -1 : this.speedY); //设置速度。
@@ -1143,7 +1157,6 @@
                  ///gamingAuido = new Phaser.Sound(game, 'gaming', .2);
                  gamingAuido = game.add.audio('gaming');
                  gamingAuido.play();
-
 
 
 
@@ -1250,8 +1263,8 @@
                  var event = game.time.events.loop(Phaser.Timer.SECOND, function() {
                      self.allSeconds--;
 
-                     self.counts = 60 - self.allSeconds;
-                     if (self.allSeconds < 0) {
+                     self.counts = counts - self.allSeconds;
+                     if (self.allSeconds <= 0) {
                          //game over
                          event.timer.stop(); //时间到。游戏结束
                          text.exists = false;
@@ -1311,7 +1324,7 @@
                  energy1 = game.add.sprite(viewW / 2 - 30, game.height, 'energy');
 
 
-                 energyText = game.add.text(viewW - 18, 60, '21 / 21', {
+                 energyText = game.add.text(viewW - 24, 160, '21', {
                      fill: '#fff',
                      font: '28px'
                  });
@@ -1324,7 +1337,7 @@
                  var isMove = false;
 
                  game.input.onTap.add(function() {
-                     if (self.gameisover) {
+                     if (self.gameisover || self.timerover) {
                          return;
                      }
                      if (isMove || jumper.isDown) return;
@@ -1392,7 +1405,7 @@
                  this.speed = 0;
 
                  touch.onTouchEnd = function(e) {
-                     if (self.gameisover) {
+                     if (self.gameisover || self.timerover) {
                          return;
                      }
                      isMove = false;
@@ -1408,10 +1421,10 @@
                          }
                          slowText.exists = false;
                          this.timer && clearTimeout(this.timer);
-                         if (!self.gameisover && !game.paused) {
+                         if (!self.gameisover && !game.paused && !self.timerover) {
                              this.timer = setTimeout(function() {
-                                 !self.gameisover && (slowText.exists = true);
-                                 !self.gameisover && waitAudio.play();
+                                 !self.timerover && !self.gameisover && (slowText.exists = true);
+                                 !self.timerover && !self.gameisover && waitAudio.play();
                                  /* !self.gameisover && !game.paused && $('.zmiti-tip').css({
                                       display: 'block'
                                   }).off('touchstart').on('touchstart', function() {
@@ -1469,22 +1482,68 @@
                          flySprite.angle = 90;
                      }*/
 
-                 if (energy.y < -100) {
-                     energy.y = defaultY;
-                 }
 
-                 if (energy1.y < -100) {
-                     energy1.y = defaultY;
-                 }
 
                  if (self.timerover) { //时间到了
-                     //self.timerover = false;
+                     if (tiggerSprite.y === defaultY) {
+                         tiggerSprite.kill();
+                         //self.timerover = false;
+                     }
+                     if (energy.y < -100) {
+                         energy.exists = false;
+                         energy.kill();
+                     }
+
+                     if (energy1.y < -100) {
+                         energy1.exists = false;
+                         energy1.kill();
+                     }
+
+                     self.overDieFly = self.overDieFly || [];
+                     self.flyArr.forEach(function(fly, i) {
+                         var dieFly = game.add.image(fly.flySprite.x, fly.flySprite.y, 'fly-die');
+                         dieFly.scale.set(.5, .5);
+                         game.world.setChildIndex(dieFly, 1);
+                         self.overDieFly.push(dieFly);
+                         self.flyArr.splice(i, 1);
+                     })
+
+                     self.overDieFly.forEach(function(fly, i) {
+                         fly.x--;
+                         if (fly.x <= -40) {
+                             fly.kill();
+                             self.overDieFly.splice(i, 1)
+                         }
+                     })
+
+                     ZmitiGameUtil.game.world.children.forEach(function(child, i) {
+                         if (child.key === 'energy' || child.key === 'tigger' || child.key === 'fly') {
+                             ZmitiGameUtil.game.world.removeChild(child);
+                         }
+                     })
+
                      sprite.y++;
                      if (sprite.y > defaultY) {
-                         self.fillHeroList();
+                         sprite.y = 0;
+                         sprite.exists && self.fillHeroList();
+
+                         sprite.kill();
+                         sprite.exists = false;
+
                          //self.game.paused = true;
+                     } else {
+
                      }
+
                      //
+                 } else {
+                     if (energy.y < -100) {
+                         energy.y = defaultY;
+                     }
+
+                     if (energy1.y < -100) {
+                         energy1.y = defaultY;
+                     }
                  }
 
                  bg.autoScroll(0, !this.speed ? -50 : (this.speed * 3 + 200) * -1);
@@ -1555,7 +1614,8 @@
 
                      self.currentBlood += 2;
                      if (self.currentBlood > allBlood) {
-                         self.currentBlood = allBlood;
+                         //self.currentBlood = allBlood;
+                         allBlood = self.currentBlood;
                      }
                      addEnergy.play();
                      self.computeBlood(self.currentBlood, allBlood)
@@ -1570,7 +1630,9 @@
                      addEnergy.play();
 
                      if (self.currentBlood > allBlood) {
-                         self.currentBlood = allBlood;
+                         //self.currentBlood = allBlood;
+                         allBlood = self.currentBlood;
+
                      }
                      self.computeBlood(self.currentBlood, allBlood)
 
@@ -1584,7 +1646,7 @@
                      self.overSprite.y--;
                      if (self.overSprite.y < -200) {
                          self.overSprite.kill();
-                         self.overSprite = null;
+                         //self.overSprite = null;
                          self.flyArr.forEach(function(fly) {
                              fly.flySprite.exists = false;
                          })
@@ -1603,71 +1665,14 @@
                      //console.log(tiggerSprite.x, tiggerSprite.y)
 
                      self.currentBlood -= 4;
+
                      self.computeBlood(Math.max(self.currentBlood, 0), allBlood)
 
-
-                     if (self.currentBlood < 0) {
-                         self.currentBlood = 0;
-
-                         overSprite = game.add.sprite(startX, 70, 'over-sprite');
-                         self.overSprite = overSprite;
-                         var ani = overSprite.animations.add('run', [0, 1, 2, 3]);
-
-                         overSprite.scale.set(.4, .4);
-                         overSprite.exists = false;
-
-                         sprite.exists = false;
-
-                         var personDie = game.add.image(startX, 100, 'person-die');
-                         self.personDie = personDie;
-                         personDie.scale.set(.4, .4);
-                         jumper.exists = false;
-                         jumper.kill();
-
-
-                         /*  dieTigger = game.add.image(tiggerSprite.x, tiggerSprite.y, 'tigger-die');
-                           dieTigger.scale.set(.3, .3);*/
-                         self.gameisover = true;
-                         setTimeout(function() {
-                             overSprite.exists = true;
-                             self.fillHeroList(overSprite);
-                             tiggerSprite.kill();
-                             //flySprite.kill();
-                             personDie.kill();
-                             dieTigger.kill();
-                         }, 1000)
-                         game.world.setChildIndex(tiggerSprite, 10);
+                     if (self.timerover) {
+                         self.currentBlood = 21;
+                         allBlood = 21;
+                         self.computeBlood(self.currentBlood, allBlood);
                      } else {
-                         self.tiggerCount++;
-                         tiggerKill.exists = true;
-                         tiggerKill.y = tiggerSprite.y
-                         setTimeout(function() {
-                             tiggerKill.exists = false;
-                         }, 350)
-                         dieTigger = game.add.image(tiggerSprite.x, tiggerSprite.y, 'tigger-die');
-                         dieTigger.scale.set(.3, .3);
-                         game.world.setChildIndex(dieTigger, 1);
-                         //console.log(game.world.children)
-                         tiggerDieAudio.play()
-                         tiggerSprite.y = defaultY;
-                         self.fillDialog('tiggerList');
-                     }
-
-
-
-                     //tiggerSprite.exists = false; //
-
-
-                 })
-                 //和苍蝇碰撞上了。
-
-                 self.flyArr.forEach(function(sprite, i) {
-                     sprite.die();
-                     var flySprite = sprite.flySprite;
-                     game.physics.arcade.overlap(jumper, flySprite, function() {
-                         self.currentBlood -= 2;
-
-
 
                          if (self.currentBlood < 0) {
                              self.currentBlood = 0;
@@ -1699,27 +1704,102 @@
                                  personDie.kill();
                                  dieTigger.kill();
                              }, 1000)
+                             game.world.setChildIndex(tiggerSprite, 10);
+                         } else {
+                             self.tiggerCount++;
+                             tiggerKill.exists = true;
+                             tiggerKill.y = tiggerSprite.y
+                             setTimeout(function() {
+                                 tiggerKill.exists = false;
+                             }, 350)
+                             dieTigger = game.add.image(tiggerSprite.x, tiggerSprite.y, 'tigger-die');
+                             dieTigger.scale.set(.3, .3);
+                             game.world.setChildIndex(dieTigger, 1);
+                             //console.log(game.world.children)
+                             tiggerDieAudio.play()
+                             tiggerSprite.y = defaultY;
+                             self.fillDialog('tiggerList');
+                         }
+                     }
+
+
+
+                     //tiggerSprite.exists = false; //
+
+
+                 })
+                 //和苍蝇碰撞上了。
+
+                 self.flyArr.forEach(function(sprite, i) {
+                     sprite.die();
+                     var flySprite = sprite.flySprite;
+                     game.physics.arcade.overlap(jumper, flySprite, function() {
+                         self.currentBlood -= 2;
+
+
+
+                         if (self.timerover) {
 
                          } else {
-                             self.fillDialog('flyList');
-                             self.flyCount++;
-                             var dieFly = game.add.image(flySprite.x, flySprite.y, 'fly-die');
-                             dieFly.scale.set(.5, .5);
-                             game.world.setChildIndex(dieFly, 1);
 
-                             dieFlyArr.push(dieFly)
+                             if (self.currentBlood < 0) {
+                                 self.currentBlood = 0;
 
-                             setTimeout(function() {
-                                 dieFlyArr.forEach(function(fly) {
-                                     fly.kill();
-                                     fly = null;
-                                 })
-                             }, 3000)
+                                 overSprite = game.add.sprite(startX, 70, 'over-sprite');
+                                 self.overSprite = overSprite;
+                                 var ani = overSprite.animations.add('run', [0, 1, 2, 3]);
 
-                             flySprite.y = defaultY;
+                                 overSprite.scale.set(.4, .4);
+                                 overSprite.exists = false;
+
+                                 sprite.exists = false;
+
+                                 var personDie = game.add.image(startX, 100, 'person-die');
+                                 self.personDie = personDie;
+                                 personDie.scale.set(.4, .4);
+                                 jumper.exists = false;
+                                 jumper.kill();
+
+
+                                 /*  dieTigger = game.add.image(tiggerSprite.x, tiggerSprite.y, 'tigger-die');
+                                   dieTigger.scale.set(.3, .3);*/
+                                 self.gameisover = true;
+                                 setTimeout(function() {
+                                     overSprite.exists = true;
+                                     self.fillHeroList(overSprite);
+                                     tiggerSprite.kill();
+                                     //flySprite.kill();
+                                     personDie.kill();
+                                     dieTigger.kill();
+                                 }, 1000)
+
+                             } else {
+                                 self.fillDialog('flyList');
+                                 self.flyCount++;
+                                 var dieFly = game.add.image(flySprite.x, flySprite.y, 'fly-die');
+                                 dieFly.scale.set(.5, .5);
+                                 game.world.setChildIndex(dieFly, 1);
+
+                                 dieFlyArr.push(dieFly)
+
+                                 setTimeout(function() {
+                                     dieFlyArr.forEach(function(fly) {
+                                         fly.kill();
+                                         fly = null;
+                                     })
+                                 }, 3000)
+
+                                 flySprite.y = defaultY;
+                             }
                          }
-                         self.computeBlood(self.currentBlood, allBlood)
 
+                         if (self.timerover) {
+                             self.currentBlood = 21;
+                             allBlood = 21;
+                             self.computeBlood(self.currentBlood, allBlood);
+                         } else {
+                             self.computeBlood(self.currentBlood, allBlood)
+                         }
 
                      })
                  })
@@ -1729,7 +1809,6 @@
                      var flySprite = flyObj.flySprite;
                      game.physics.arcade.overlap(sprite, flySprite, function() {
                          self.currentBlood -= 2;
-
 
                          if (self.currentBlood < 0) {
                              self.currentBlood = 0;
@@ -1780,6 +1859,7 @@
              var index = _this.index();
              switch (index) {
                  case 0:
+                     window.location.href = window.location.href;
                      window.location.reload();
                      /*game.paused = false;
                      //game.state.start('gameState');
@@ -1849,11 +1929,10 @@
 
      gameover: function(overSprite) {
          this.gameisover = true;
+         var self = this;
          $('.zmiti-dialog-C.show').addClass('hide').removeClass('show');
          // this.qrcode.exists = true;
-         setTimeout(function() {
-             //this.game.paused = true;
-         }.bind(this), 1000)
+
          this.timerEvent.timer.stop();
 
 
@@ -1880,12 +1959,12 @@
          if (result <= 5) {
              this.wxConfig('我参加了打虎行动，仅仅是参加', '打虎路上，我成功以' + this.tiggerCount + '只老虎，' + this.flyCount + '只苍蝇的成绩成为参与者')
          } else if (result > 5 && result <= 15) {
-             this.wxConfig(this.tiggerCount + '只老虎，' + this.flyCount + '只苍蝇,看我72绝技', '反腐路上，我将继续前进')
+             this.wxConfig(this.tiggerCount + '只老虎，' + this.flyCount + '只苍蝇，看我72绝技', '反腐路上，我将继续前进')
          } else {
-             this.wxConfig(this.tiggerCount + '只老虎，' + this.flyCount + '只苍蝇,我是反腐英雄', '反腐路上，我将继续前进')
+             this.wxConfig(this.tiggerCount + '只老虎，' + this.flyCount + '只苍蝇，我是反腐英雄', '反腐路上，我将继续前进')
          }
 
-         if (result <= 5) {
+         if (result <= 5 || self.overSprite) {
              var result1 = this.game.add.image(this.game.world.centerX + 20, this.game.world.centerY, 'result1');
              var seconds = this.game.add.text(this.game.world.centerX + viewW / 10 * 2.5, this.game.world.centerY - .3 * viewW / 10, this.counts < 10 ? '0' + this.counts : this.counts, {
                  fill: '#fde957',
@@ -1974,6 +2053,11 @@
      },
      computeBlood: function(currentBlood, allBlood) {
 
+         var self = this;
+         var allBlood = self.timerover ? 21 : allBlood;
+         var currentBlood = self.timerover ? 21 : currentBlood;
+
+
          this.span = this.span || $('#zmiti-blood-C span');
          this.bloodC = this.bloodC || $('#zmiti-blood-C')
          var currentBlood = currentBlood,
@@ -1987,7 +2071,7 @@
 
 
 
-         this.energyText.setText(currentBlood + ' / ' + allBlood)
+         this.energyText.setText(currentBlood)
          var scale = (currentBlood / allBlood).toFixed(1) * 1;
          this.bloodC[(scale * 10 <= 4 && currentBlood > 0) ? 'addClass' : 'removeClass']('danger')
 
@@ -2041,7 +2125,7 @@
           <div></div>\
           <div>\
             <h3 >' + d.name + '</h3>\
-            <div class="zmiti-text-overflow" >' + d.title + '</div>\
+            <div class="" >' + d.title + '</div>\
           </div>\
         </div>');
 
@@ -2151,9 +2235,12 @@
          })
          var self = this;
 
-         this.bloodC && this.bloodC.css({
-             display: 'none'
-         })
+         self.Texttween.stop();
+         self.Texttween1.stop();
+
+
+
+         this.timerEvent.timer.stop();
 
 
          /*   this['tiggerListkilled'] = this.data().tiggerList.concat([]);
@@ -2222,7 +2309,6 @@
              $('.zmiti-hero-C').addClass('active')
              // div.parent().addClass('active');
          }, 500)
-         console.log(h)
          var rem = viewW / 10;
          setTimeout(function() {
 
@@ -2250,5 +2336,6 @@
  window.onload = function() {
      window.PointerEvent = undefined;
      ZmitiGameUtil.init();
+     //  ZmitiGameUtil.fillDialog('tiggerList');
      //ZmitiGameUtil.fillHeroList();
  }

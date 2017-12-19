@@ -58,7 +58,7 @@ input, textarea {
   border-radius: 8px;
   border: 1px solid #fff;
   top: 50px;
-  right: 36px; }
+  right: 30px; }
   #zmiti-blood-C.danger {
     -webkit-animation: fadeIn 0.6s linear infinite alternate;
     animation: fadeIn 0.6s linear infinite alternate; }
@@ -219,6 +219,9 @@ input, textarea {
       -webkit-box-flex: 1; }
       .zmiti-dialog-C .zmiti-dialog-content > div:nth-of-type(3) h3 {
         line-height: 26px; }
+      .zmiti-dialog-C .zmiti-dialog-content > div:nth-of-type(3) > div {
+        color: #666;
+        font-size: 12px; }
 
 .zmiti-index-main-ui {
   overflow: hidden;

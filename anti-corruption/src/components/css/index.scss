@@ -48,7 +48,7 @@ input, textarea {
 	@include br(8px);
 	border: 1px solid #fff;
 	top: 50px;
-	right: 36px;
+	right: 30px;
 
 	&.danger {
 		@include animation(fadeIn .6s linear infinite alternate);
@@ -272,6 +272,12 @@ input, textarea {
 				}
 
 				-webkit-box-flex: 1;
+
+				&>div {
+					color: #666;
+					font-size: 12px;
+				}
+
 			}
 
 		}
