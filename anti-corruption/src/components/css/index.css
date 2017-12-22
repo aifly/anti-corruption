@@ -101,7 +101,7 @@ input, textarea {
 .zmiti-btn-groups {
   width: 1rem;
   position: absolute;
-  left: 62px;
+  left: 50px;
   z-index: 102;
   top: 50%;
   -webkit-transform: translate3d(0, -50%, 0);

@@ -605,10 +605,11 @@
              game.load.image('clip-content', './src/assets/images/clip-content.png');
              game.load.image('bg', './src/assets/images/bg.jpg');
              game.load.spritesheet('person', './src/assets/images/person.png', 203, 152);
+             game.load.spritesheet('person1', './src/assets/images/person1.png', 203, 152);
              game.load.image('energy', './src/assets/images/energy.png');
-             game.load.spritesheet('tigger', './src/assets/images/tigger.png', 135, 200)
+             game.load.spritesheet('tigger', './src/assets/images/tigger.png', 135, 200);
              game.load.image('tigger-die', './src/assets/images/tigger-die.png');
-             game.load.image('person-die', './src/assets/images/person-die.png');
+             //game.load.image('person-die', './src/assets/images/person-die.png');
              game.load.spritesheet('fly', './src/assets/images/fly.png', 81, 82)
              game.load.spritesheet('fly1', './src/assets/images/fly1.png', 81, 82)
              game.load.image('fly-die', './src/assets/images/fly-die.png');
@@ -616,7 +617,7 @@
              game.load.image('begin-btn', './src/assets/images/begin-btn.png');
              game.load.image('blood', './src/assets/images/blood.png');
              game.load.image('person-top', './src/assets/images/person-top.png');
-             game.load.spritesheet('over-sprite', './src/assets/images/over.png', 116, 376);
+             //game.load.spritesheet('over-sprite', './src/assets/images/over.png', 116, 376);
              game.load.spritesheet('wind', './src/assets/images/wind.png', 123, 105);
              game.load.image('result1', './src/assets/images/result1.png');
              game.load.image('result2', './src/assets/images/result2.png');
@@ -759,7 +760,7 @@
              });
              beginBtn.scale.set(.5, .5);
              beginBtn.anchor.setTo(.5, .5);
-             //beginBtn.exists = false;
+             beginBtn.exists = false;
              this.beginBtn = beginBtn;
 
              var startX = 62;
@@ -955,6 +956,7 @@
          function gameState() {
              this.init = function() {}
              var sprite,
+                 sprite1,
                  animation,
                  bg,
                  energy,
@@ -1364,13 +1366,13 @@
                          }
                      })
 
-                     sprite.y++;
-                     if (sprite.y > defaultY) {
-                         sprite.y = 0;
-                         sprite.exists && self.fillHeroList();
+                     sprite1.y++;
+                     if (sprite1.y > defaultY) {
+                         sprite1.y = 0;
+                         sprite1.exists && self.fillHeroList();
 
-                         sprite.kill();
-                         sprite.exists = false;
+                         sprite1.kill();
+                         sprite1.exists = false;
 
                          //self.game.paused = true;
                      } else {
@@ -1519,18 +1521,27 @@
                          if (self.currentBlood < 0) {
                              self.currentBlood = 0;
 
-                             overSprite = game.add.sprite(startX, 70, 'over-sprite');
-                             self.overSprite = overSprite;
-                             var ani = overSprite.animations.add('run', [0, 1, 2, 3]);
+                             /* overSprite = game.add.sprite(startX, 70, 'over-sprite');
+                              self.overSprite = overSprite;
+                              var ani = overSprite.animations.add('run', [0, 1, 2, 3]);
 
-                             overSprite.scale.set(.4, .4);
-                             overSprite.exists = false;
+                              overSprite.scale.set(.4, .4);
+                              overSprite.exists = false;*/
 
+                             //sprite.exists = false;
+
+
+                             self.timerover = true;
+
+                             sprite1 = game.add.sprite(startX, 100, 'person1');
+                             sprite1.scale.set(.3, .3)
                              sprite.exists = false;
+                             animation = sprite1.animations.add('run', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+                             sprite1.animations.play('run', 25, true);
 
-                             var personDie = game.add.image(startX, 100, 'person-die');
+                             /*   var personDie = game.add.image(startX, 100, 'person-die');
                              self.personDie = personDie;
-                             personDie.scale.set(.4, .4);
+                             personDie.scale.set(.4, .4);*/
                              jumper.exists = false;
                              jumper.kill();
 
@@ -1539,11 +1550,11 @@
                                dieTigger.scale.set(.3, .3);*/
                              self.gameisover = true;
                              setTimeout(function() {
-                                 overSprite.exists = true;
-                                 self.fillHeroList(overSprite);
+                                 // overSprite.exists = true;
+                                 self.fillHeroList();
                                  tiggerSprite.kill();
                                  //flySprite.kill();
-                                 personDie.kill();
+                                 //personDie.kill();
                                  dieTigger.kill();
                              }, 1000)
                              game.world.setChildIndex(tiggerSprite, 10);
@@ -1587,18 +1598,28 @@
                              if (self.currentBlood < 0) {
                                  self.currentBlood = 0;
 
-                                 overSprite = game.add.sprite(startX, 70, 'over-sprite');
-                                 self.overSprite = overSprite;
-                                 var ani = overSprite.animations.add('run', [0, 1, 2, 3]);
+                                 /* overSprite = game.add.sprite(startX, 70, 'over-sprite');
+                                  self.overSprite = overSprite;
+                                  var ani = overSprite.animations.add('run', [0, 1, 2, 3]);
 
-                                 overSprite.scale.set(.4, .4);
-                                 overSprite.exists = false;
+                                  overSprite.scale.set(.4, .4);
+                                  overSprite.exists = false;*/
 
-                                 sprite.exists = false;
+                                 //sprite.exists = false;
+                                 self.timerover = true;
 
-                                 var personDie = game.add.image(startX, 100, 'person-die');
+                                 /*  var personDie = game.add.image(startX, 100, 'person-die');
                                  self.personDie = personDie;
-                                 personDie.scale.set(.4, .4);
+                                 personDie.scale.set(.4, .4);*/
+
+
+
+                                 sprite1 = game.add.sprite(startX, 100, 'person1');
+                                 sprite1.scale.set(.3, .3)
+                                 sprite.exists = false;
+                                 animation = sprite1.animations.add('run', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+                                 sprite1.animations.play('run', 25, true);
+
                                  jumper.exists = false;
                                  jumper.kill();
 
@@ -1607,11 +1628,11 @@
                                    dieTigger.scale.set(.3, .3);*/
                                  self.gameisover = true;
                                  setTimeout(function() {
-                                     overSprite.exists = true;
-                                     self.fillHeroList(overSprite);
+                                     // overSprite.exists = true;
+                                     self.fillHeroList();
                                      tiggerSprite.kill();
                                      //flySprite.kill();
-                                     personDie.kill();
+                                     //personDie.kill();
                                      dieTigger.kill();
                                  }, 1000)
 
@@ -1701,8 +1722,8 @@
              var index = _this.index();
              switch (index) {
                  case 0:
-                     window.location.href = window.location.href;
-                     window.location.reload();
+                     window.location.href = window.location.href.split('#')[0].split('?')[0] + '?t=' + new Date().getTime();
+                     //window.location.reload();
                      /*game.paused = false;
                      //game.state.start('gameState');
                      self.gameisover = false;
