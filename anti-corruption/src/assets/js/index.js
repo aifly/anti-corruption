@@ -763,7 +763,7 @@
              });
              beginBtn.scale.set(.5, .5);
              beginBtn.anchor.setTo(.5, .5);
-             //beginBtn.exists = false;
+             beginBtn.exists = false;
              this.beginBtn = beginBtn;
 
              var startX = 62;
@@ -820,13 +820,9 @@
                      this.sprite.y++;
                  }
              }
-
-
          }
-
      },
-
-     createMoveEnergy(energyObj, blood) {
+     createMoveEnergy:function(energyObj, blood) {
          var game = this.game;
          var energy = game.add.sprite(viewW / 2 - 30, game.height, 'energy');
          energy.x = energyObj.x;
@@ -2014,7 +2010,7 @@
          })
 
      },
-     wxConfig(title, desc) {
+     wxConfig:function(title, desc) {
 
          var img = 'http://h5.zmiti.com/public/anti-corruption/src/assets/images/300.jpg';
 
