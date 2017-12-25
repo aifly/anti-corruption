@@ -195,6 +195,16 @@ input, textarea {
 	opacity: .5;
 	@include transition(.5s);
 
+	&:after {
+		content: '>>';
+		@include pos(a);
+		right: .2rem;
+		bottom: .2rem;
+		font-size: .4rem;
+		color: #666;
+		@include transform(scale(1, 1.8));
+	}
+
 	&.show {
 		opacity: 1;
 		-webkit-transform: rotate(90deg) translate(0, 0) !important;
@@ -345,7 +355,7 @@ input, textarea {
 
 .zmiti-hero-C {
 	display: none;
-	left: -5rem;
+	left: -4rem;
 	@include transform(rotate(90deg) translate3d(0, 10rem, 0));
 
 	&.active {
@@ -353,7 +363,7 @@ input, textarea {
 		@include transform(rotate(90deg) translate3d(0, 0, 0));
 	}
 
-	width: 12rem;
+	width: 10rem;
 
 	&:before {
 		content: '';
@@ -429,18 +439,10 @@ input, textarea {
 
 			ul {
 				display: block;
-				float: left;
-				width: 48%;
+				width: 65%;
 				box-sizing: border-box;
 				overflow: hidden;
-
-				&:nth-of-type(1) {
-					margin-right: 2%;
-				}
-
-				&:nth-of-type(2) {
-					margin-left: 2%;
-				}
+				margin: 0 auto;
 
 				li {
 					@include displayBox(horizontal);
