@@ -30,7 +30,7 @@
                  name: '尹海林',
                  date: '2017/01/20',
                  headimg: './src/assets/images/yhl.png',
-                 href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=1463070&isview=1&homeshow=1'
+                 href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=1511451&isview=1&homeshow=1'
              }, {
                  title: '受贿、滥用职权、巨额财产来源不明案一审宣判',
                  name: '苏荣',
@@ -86,13 +86,7 @@
                  headimg: './src/assets/images/lj.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=1643195&isview=1&homeshow=1'
              }, {
-                 title: '立案侦查',
-                 name: '李嘉',
-                 date: '2017/03/17',
-                 headimg: './src/assets/images/lj.png',
-                 href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=1667821&isview=1&homeshow=1'
-             }, {
-                 title: '涉嫌严重违纪',
+                 title: '涉嫌严重违纪接受组织审查',
                  name: '王世江',
                  date: '2017/04/06',
                  headimg: './src/assets/images/wsj.png',
@@ -110,7 +104,7 @@
                  headimg: './src/assets/images/xjb.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=1731546&isview=1&homeshow=1'
              }, {
-                 title: '涉嫌严重违纪',
+                 title: '涉嫌严重违纪接受组织审查',
                  name: '杨崇勇',
                  date: '2017/04/11',
                  headimg: './src/assets/images/ycy.png',
@@ -122,11 +116,11 @@
                  headimg: './src/assets/images/gry.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=1745447&isview=1&homeshow=1'
              }, {
-                 title: '涉嫌严重违纪',
+                 title: '涉嫌严重违纪接受组织审查',
                  name: '张化为',
                  date: '2017/04/17',
                  headimg: './src/assets/images/zhw.png',
-                 href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=1463070&isview=1&homeshow=1'
+                 href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=1754289&isview=1&homeshow=1'
              }, {
                  title: '受贿行贿案一审获刑20年',
                  name: '潘逸阳',
@@ -134,7 +128,7 @@
                  headimg: './src/assets/images/pyy.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=1759104&isview=1&homeshow=1'
              }, {
-                 title: '被问责并降',
+                 title: '被问责并降级',
                  name: '陈传书',
                  date: '2017/04/24',
                  headimg: './src/assets/images/ccs.png',
@@ -164,12 +158,6 @@
                  headimg: './src/assets/images/yjc.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=1862300&isview=1&homeshow=1'
              }, {
-                 title: '接受组织审查',
-                 name: '魏民洲',
-                 date: '2017/05/22',
-                 headimg: './src/assets/images/wmz.png',
-                 href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=1857033&isview=1&homeshow=1'
-             }, {
                  title: '因严重违纪被开除党籍',
                  name: '刘新齐',
                  date: '2017/05/24',
@@ -188,7 +176,7 @@
                  headimg: './src/assets/images/zlp.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=1877104&isview=1&homeshow=1'
              }, {
-                 title: '贪污、受贿等案一审宣判',
+                 title: '贪污、受贿等案一审被判死缓',
                  name: '武长顺',
                  date: '2017/05/27',
                  headimg: './src/assets/images/wcs.png',
@@ -199,12 +187,6 @@
                  date: '2017/06/02',
                  headimg: './src/assets/images/shs.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=1900612&isview=1&homeshow=1'
-             }, {
-                 title: '被立案侦查',
-                 name: '卢恩光',
-                 date: '2017/06/02',
-                 headimg: './src/assets/images/leg.png',
-                 href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=1902120&isview=1&homeshow=1'
              }, {
                  title: '严重违纪被“双开”',
                  name: '虞海燕',
@@ -242,85 +224,61 @@
                  headimg: './src/assets/images/cxy.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2021221&isview=1&homeshow=1'
              }, {
-                 title: '严重违纪留党察看一年',
+                 title: '严重违纪留党察看一年、行政撤职处分',
                  name: '王宏江',
                  date: '2017/07/10',
                  headimg: './src/assets/images/whj.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2037215&isview=1&homeshow=1'
              }, {
-                 title: '涉嫌严重违纪',
+                 title: '涉嫌严重违纪接受组织审查',
                  name: '王三运',
                  date: '2017/07/11',
                  headimg: './src/assets/images/wsy.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2042581&isview=1&homeshow=1'
              }, {
-                 title: '接受组织审查',
+                 title: '涉嫌严重违纪接受组织审查',
                  name: '真才基',
                  date: '2017/07/14',
                  headimg: './src/assets/images/zcj.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2056829&isview=1&homeshow=1'
              }, {
-                 title: '立案侦查',
-                 name: '苏树林',
-                 date: '2017/07/18',
-                 headimg: './src/assets/images/ssl.png',
-                 href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2070737&isview=1&homeshow=1'
-             }, {
-                 title: '立案侦查',
-                 name: '周春雨',
-                 date: '2017/07/18',
-                 headimg: './src/assets/images/zcy.png',
-                 href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2070737&isview=1&homeshow=1'
-             }, {
-                 title: '重违纪被“双开”',
+                 title: '严重违纪被“双开”',
                  name: '姚刚',
                  date: '2017/07/20',
                  headimg: './src/assets/images/yg.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2080867&isview=1&homeshow=1'
              }, {
-                 title: '重违纪被“双开”',
+                 title: '严重违纪被“双开”',
                  name: '王世江',
                  date: '2017/07/21',
                  headimg: './src/assets/images/wsj.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2083683&isview=1&homeshow=1'
              }, {
-                 title: '重违纪被“双开”',
+                 title: '严重违纪被“双开”',
                  name: '张育军',
                  date: '2017/07/21',
                  headimg: './src/assets/images/zyj.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2085729&isview=1&homeshow=1'
              }, {
-                 title: '因严重违纪被撤销党内职务',
-                 name: '许前飞',
-                 date: '2017/07/24',
-                 headimg: './src/assets/images/xqf.png',
-                 href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2092561&isview=1&homeshow=1'
-             }, {
-                 title: '涉嫌严重违纪问题立案审查',
+                 title: '涉嫌严重违纪被立案审查',
                  name: '孙政才',
                  date: '2017/07/24',
                  headimg: './src/assets/images/szc.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2095345&isview=1&homeshow=1'
              }, {
-                 title: '立案侦查',
-                 name: '魏民洲',
-                 date: '2017/08/03',
-                 headimg: './src/assets/images/wmz.png',
-                 href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2133838&isview=1&homeshow=1'
-             }, {
-                 title: '接受组织审查',
+                 title: '严重违纪接受组织审查',
                  name: '莫建成',
                  date: '2017/08/27',
                  headimg: './src/assets/images/mjc.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2228751&isview=1&homeshow=1'
              }, {
-                 title: '重违纪被“双开”',
+                 title: '严重违纪被“双开”',
                  name: '刘善桥',
                  date: '2017/09/18',
                  headimg: './src/assets/images/lsq.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2314843&isview=1&homeshow=1'
              }, {
-                 title: '重违纪被“双开”',
+                 title: '严重违纪被“双开”',
                  name: '王三运',
                  date: '2017/09/22',
                  headimg: './src/assets/images/wsy.png',
@@ -332,13 +290,13 @@
                  headimg: './src/assets/images/gjj.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2333949&isview=1&homeshow=1'
              }, {
-                 title: '重违纪被“双开”',
+                 title: '严重违纪被“双开”',
                  name: '项俊波',
-                 date: '2017/09/23',
-                 headimg: './src/assets/images/xjb.png',
+                 date: '2017/09/22',
+                 headimg: './src/assets/images/gjj.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2335616&isview=1&homeshow=1'
              }, {
-                 title: '重违纪被“双开”',
+                 title: '严重违纪被“双开”',
                  name: '莫建成',
                  date: '2017/09/23',
                  headimg: './src/assets/images/mjc.png',
@@ -350,28 +308,10 @@
                  headimg: './src/assets/images/hxg.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2342928&isview=1&homeshow=1'
              }, {
-                 title: '立案侦查',
-                 name: '项俊波',
-                 date: '2017/09/29',
-                 headimg: './src/assets/images/xjb.png',
-                 href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2361618&isview=1&homeshow=1'
-             }, {
-                 title: '开除党籍开除公职处分',
-                 name: '孙政才',
-                 date: '2017/09/29',
-                 headimg: './src/assets/images/szc.png',
-                 href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2362533&isview=1&homeshow=1'
-             }, {
                  title: '被处分',
                  name: '夏崇源',
                  date: '2017/10/09',
                  headimg: './src/assets/images/xcy.png',
-                 href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2387097&isview=1&homeshow=1'
-             }, {
-                 title: '被处分',
-                 name: '何挺',
-                 date: '2017/10/09',
-                 headimg: './src/assets/images/ht.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2387097&isview=1&homeshow=1'
              }, {
                  title: '涉嫌严重违纪接受组织审查',
@@ -391,12 +331,6 @@
                  date: '2017/11/28',
                  headimg: './src/assets/images/zy.png',
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2627907&isview=1&homeshow=1'
-             }, {
-                 title: '立案侦查',
-                 name: '孙政才',
-                 date: '2017/11/11',
-                 headimg: './src/assets/images/szc.png',
-                 href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2742594&isview=1&homeshow=1'
              }
          ];
 
@@ -589,6 +523,7 @@
                  href: 'https://xhpfmapi.zhongguowangshi.com/share/index.html?docid=2640719&isview=1&homeshow=1'
              }
          ]
+         flyList.length = 0;
          return tiggerList.concat(flyList)
 
      },
@@ -770,7 +705,7 @@
              var sprite = game.add.sprite(startX, -100, 'person');
              this.sprite = sprite;
              sprite.scale.set(.3, .3)
-             //sprite.exists = false;
+             sprite.exists = false;
              animation = sprite.animations.add('run', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
              sprite.animations.play('run', 25, true);
 
@@ -795,6 +730,7 @@
          update: function() {
              var personTop = this.personTop;
              if (this.sprite) {
+                 this.sprite.exists = true;
                  if (this.sprite.y > 100) {
                      this.sprite.y = 100;
                      this.jumper.exists = true;
@@ -822,7 +758,7 @@
              }
          }
      },
-     createMoveEnergy:function(energyObj, blood) {
+     createMoveEnergy: function(energyObj, blood) {
          var game = this.game;
          var energy = game.add.sprite(viewW / 2 - 30, game.height, 'energy');
          energy.x = energyObj.x;
@@ -1120,10 +1056,15 @@
                          self.timerover = true;
 
                          sprite1 = game.add.sprite(startX, 100, 'person');
-                         sprite1.scale.set(.3, .3)
+                         sprite1.scale.set(.3, .3);
+
                          sprite.exists = false;
+
                          animation = sprite1.animations.add('run', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
                          sprite1.animations.play('run', 25, true);
+
+
+
                          //self.fillHeroList();
 
                      } else {
@@ -1348,6 +1289,8 @@
 
 
                  if (self.timerover) { //时间到了
+                     sprite.exists = false;
+                     sprite.kill();
                      if (tiggerSprite.y === defaultY) {
                          tiggerSprite.kill();
                          //self.timerover = false;
@@ -1371,7 +1314,7 @@
                      sprite1.y++;
                      if (sprite1.y > defaultY) {
                          sprite1.y = 0;
-                         sprite1.exists && self.fillHeroList();
+                         //sprite1.exists && self.fillHeroList();
 
                          sprite1.kill();
                          sprite1.exists = false;
@@ -2010,7 +1953,7 @@
          })
 
      },
-     wxConfig:function(title, desc) {
+     wxConfig: function(title, desc) {
 
          var img = 'http://h5.zmiti.com/public/anti-corruption/src/assets/images/300.jpg';
 
@@ -2115,21 +2058,23 @@
                 </div>\
             </li>';
          });
-         $('#zmiti-tigger-list').append(tiggerListHtml)
+         var teamHtml = '';
+         teamHtml += '<div class="zmiti-team-C"><h3 class="zmiti-split-line"></h3>\
+         <div class="zmiti-team-item"><span>出品：</span><span>陈凯星</span><span> 冯瑛冰</span></div>\
+         <div class="zmiti-team-item"><span>监制：</span><span>齐慧杰</span>\
+         <div class="zmiti-team-item"><span>统筹：</span><span>黄庆华</span>\
+        <div class="zmiti-team-item"><span>策划：</span><span>肖磊涛</span><span>谭慧婷</span><span>张家溪</span><span>牧小湘</span>\
+         <div class="zmiti-team-item"><span>制作：</span><span>麟腾传媒</span></div>\
+         '
 
-         /*
-                  var flyListHtml = '';
-                  this['flyListkilled'].forEach(function(list, i) {
-                      flyListHtml += '<li>\
-                         <div class="zmiti-hero-content">\
-                             <h3>' + list.name + '</h3>\
-                             <div><span class="zmiti-list-title zmiti-text-overflow">' + list.title + ' </span><span data-href=' + list.href + ' class="zmiti-detail-btn">详情>></span></div>\
-                         </div>\
-                     </li>';
-                  });
-                  $('#zmiti-fly-list').append(flyListHtml);*/
+         var triggerList = $('#zmiti-tigger-list');
+         triggerList.append(tiggerListHtml);
+         var div = $('.zmiti-scroll-C>div')
+         div.append(teamHtml);
 
-         /**/
+         var h = $('#zmiti-tigger-list').width() + $('.zmiti-team-C').width();
+
+         div.height(h);
 
          var zmitiNext = $('#zmiti-next');
          zmitiNext.on('click', function() {
@@ -2151,8 +2096,7 @@
              //self.game.paused = true;
              self.iframeC.find('iframe').attr('src', href);
          });
-         var h = $('#zmiti-tigger-list').width();
-         var div = $('.zmiti-scroll-C>div').height(h);
+
 
          var scroll = new IScroll('.zmiti-scroll-C', {
              mouseWheel: true,
@@ -2167,18 +2111,21 @@
 
              scroll.refresh();
 
-             scroll.scrollTo(0, -h + 4.5 * rem, 10 * 1000, IScroll.utils.linear);
+             div.css({
+                 WebkitTransform: 'translate(0,' + (-h + 4.5 * rem) + 'px)',
+                 WebkitTransitionDuration: '6s',
+                 WebkitTransitionTimingFunction: 'linear'
+             });
+
+             // scroll.scrollTo(0, -h + 4.5 * rem, 10 * 1000, IScroll.utils.linear);
 
 
              self.nextTimer = setTimeout(function() {
                  zmitiNext.trigger('click');
              }, 10 * 1000);
-
-
-
          }, 5000 + 1000)
 
-         overSprite && overSprite.animations.play('run', 10, true);
+         //overSprite && overSprite.animations.play('run', 10, true);
      }
 
  }

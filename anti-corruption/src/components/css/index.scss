@@ -290,6 +290,26 @@ input, textarea {
 
 }
 
+.zmiti-split-line {
+	border-top: 1px dashed #fff;
+	height: 1px;
+	margin: 1rem 0;
+}
+
+.zmiti-team-C {
+	width: 75%;
+	margin: 0 auto;
+}
+
+.zmiti-team-item {
+	line-height: 1rem;
+
+	span {
+		margin: 0 .3rem 0 0;
+	}
+
+}
+
 .zmiti-index-main-ui {
 	overflow: hidden;
 	display: none;
@@ -439,7 +459,7 @@ input, textarea {
 
 			ul {
 				display: block;
-				width: 65%;
+				width: 75%;
 				box-sizing: border-box;
 				overflow: hidden;
 				margin: 0 auto;
