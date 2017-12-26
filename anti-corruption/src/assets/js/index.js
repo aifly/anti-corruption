@@ -1050,6 +1050,9 @@
 
                      self.counts = counts - self.allSeconds;
                      if (self.allSeconds <= 0) {
+
+                         jumper.kill();
+                         jumper.exists = false;
                          //game over
                          event.timer.stop(); //时间到。游戏结束
                          text.exists = false;
@@ -1314,7 +1317,7 @@
                      sprite1.y++;
                      if (sprite1.y > defaultY) {
                          sprite1.y = 0;
-                         //sprite1.exists && self.fillHeroList();
+                         sprite1.exists && self.fillHeroList();
 
                          sprite1.kill();
                          sprite1.exists = false;
@@ -1465,6 +1468,9 @@
 
                          if (self.currentBlood < 0) {
                              self.currentBlood = 0;
+                                 
+                             jumper.kill();
+                             jumper.exists = false;
 
                              self.gamefail = true;
 
@@ -2068,8 +2074,9 @@
          '
 
          var triggerList = $('#zmiti-tigger-list');
-         triggerList.append(tiggerListHtml);
-         var div = $('.zmiti-scroll-C>div')
+         triggerList.html(tiggerListHtml);
+         var div = $('.zmiti-scroll-C>div');
+         $('.zmiti-team-C').remove();
          div.append(teamHtml);
 
          var h = $('#zmiti-tigger-list').width() + $('.zmiti-team-C').width();
