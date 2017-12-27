@@ -653,7 +653,7 @@
              this.titleTween = titleTween;
 
 
-             var desc = game.add.text(viewW / 2 - 25, viewH / 2, ' “打虎”最新讯息一端掌握。2017年，新华社客户端推\n送百余条反腐首发弹窗，岁末之际，快来点点看你还记得\n哪些贪官落马。', {
+             var desc = game.add.text(viewW / 2 - 28, viewH / 2, ' 2017年，新华社客户端推送百余条反腐首\n发弹窗，岁末之际，快来点点看你还记得哪\n些贪官落马。', {
                  fill: '#fff',
                  font: '110px ',
              });
@@ -780,12 +780,28 @@
      },
 
 
+     computePV: function() {
+         $.ajax({
+             url: 'http://api.zmiti.com/v2/works/update_pvnum/',
+             type: 'post',
+             data: {
+                 worksid: '1797961610'
+             },
+             success(data) {
+                 //console.log(data)
+                 if (data.getret === 0) {}
+             }
+         });
+     },
+
 
      init: function() {
          var defaultY = viewH + 100,
              flySpeed = -50;
 
          var self = this;
+
+         self.computePV();
 
          function Fly(option) {
              var option = option || {};
@@ -1468,7 +1484,7 @@
 
                          if (self.currentBlood < 0) {
                              self.currentBlood = 0;
-                                 
+
                              jumper.kill();
                              jumper.exists = false;
 
@@ -1656,6 +1672,15 @@
          }.bind(this));
          var game = this.game;
          var self = this;
+
+         $('.zmiti-team-C').on('click', function() {
+             $(this).addClass('hide')
+             self.group.children.forEach(function(img) {
+                 img.exists = true;
+             })
+         })
+
+
          $('#zmiti-btn-groups div').on('click', function() {
              var _this = $(this);
              var index = _this.index();
@@ -1722,6 +1747,13 @@
                          }
                      })
 
+                     break;
+
+                 case 3:
+                     $('.zmiti-team-C').removeClass('hide');
+                     self.group.children.forEach(function(img) {
+                         img.exists = false;
+                     })
                      break;
              }
          })
@@ -1961,7 +1993,7 @@
      },
      wxConfig: function(title, desc) {
 
-         var img = 'http://h5.zmiti.com/public/anti-corruption/src/assets/images/300.jpg';
+         var img = 'http://h5.zmiti.com/public/anti-corruption/src/assets/images/301.jpg';
 
          var appId = 'wxfacf4a639d9e3bcc'
          var durl = location.href.split('#')[0]; //window.location;
@@ -2064,22 +2096,23 @@
                 </div>\
             </li>';
          });
-         var teamHtml = '';
-         teamHtml += '<div class="zmiti-team-C"><h3 class="zmiti-split-line"></h3>\
+         /*var teamHtml = '';
+         teamHtml += '<div class="zmiti-team-C" style="display:none;"><h3 class="zmiti-split-line"></h3>\
          <div class="zmiti-team-item"><span>出品：</span><span>陈凯星</span><span> 冯瑛冰</span></div>\
          <div class="zmiti-team-item"><span>监制：</span><span>齐慧杰</span>\
          <div class="zmiti-team-item"><span>统筹：</span><span>黄庆华</span>\
         <div class="zmiti-team-item"><span>策划：</span><span>肖磊涛</span><span>谭慧婷</span><span>张家溪</span><span>牧小湘</span>\
          <div class="zmiti-team-item"><span>制作：</span><span>麟腾传媒</span></div>\
-         '
+         '*/
 
          var triggerList = $('#zmiti-tigger-list');
          triggerList.html(tiggerListHtml);
          var div = $('.zmiti-scroll-C>div');
-         $('.zmiti-team-C').remove();
-         div.append(teamHtml);
+         //$('.zmiti-team-C').remove();
+         //div.append(teamHtml);
 
-         var h = $('#zmiti-tigger-list').width() + $('.zmiti-team-C').width();
+         //var h = $('#zmiti-tigger-list').width() + $('.zmiti-team-C').width();
+         var h = $('#zmiti-tigger-list').width();
 
          div.height(h);
 
@@ -2105,9 +2138,6 @@
          });
 
 
-         var scroll = new IScroll('.zmiti-scroll-C', {
-             mouseWheel: true,
-         });
 
          setTimeout(function() {
              $('.zmiti-hero-C').addClass('active')
@@ -2116,7 +2146,7 @@
          var rem = viewW / 10;
          setTimeout(function() {
 
-             scroll.refresh();
+
 
              div.css({
                  WebkitTransform: 'translate(0,' + (-h + 4.5 * rem) + 'px)',
@@ -2124,11 +2154,18 @@
                  WebkitTransitionTimingFunction: 'linear'
              });
 
+             setTimeout(function() {
+                 var scroll = new IScroll('.zmiti-scroll-C', {
+                     mouseWheel: true,
+                 });
+                 scroll.scrollTo(0, -h + 4.5 * rem, 1);
+             }, 6100)
+
              // scroll.scrollTo(0, -h + 4.5 * rem, 10 * 1000, IScroll.utils.linear);
 
 
              self.nextTimer = setTimeout(function() {
-                 zmitiNext.trigger('click');
+                 !self.showResult && zmitiNext.trigger('click');
              }, 10 * 1000);
          }, 5000 + 1000)
 
@@ -2139,7 +2176,6 @@
 
 
  window.onload = function() {
-     window.PointerEvent = undefined;
      ZmitiGameUtil.init();
 
  }
